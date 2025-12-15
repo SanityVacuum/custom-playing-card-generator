@@ -1,0 +1,3156 @@
+<!--
+Custom Playing Card Generator - Beta 5
+Created by Dan Atkins
+Licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+
+You are free to:
+- Share: copy and redistribute the material in any medium or format
+- Adapt: remix, transform, and build upon the material for any purpose, even commercially
+
+Under the following terms:
+- Attribution: You must give appropriate credit to Dan Atkins
+- ShareAlike: If you remix, transform, or build upon the material, you must distribute 
+  your contributions under the same license as the original
+
+Full license: https://creativecommons.org/licenses/by-sa/4.0/
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Playing Card Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="gamecrafter-api.js"></script>
+    <style>
+        .serpentine-header {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-800 to-green-950 min-h-screen p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="serpentine-header text-5xl font-bold text-white mb-3">CUSTOM PLAYING CARD GENERATOR</h1>
+            <p class="text-white text-sm opacity-75">Created by Dan Atkins | Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="underline hover:opacity-100">Creative Commons CC BY-SA 4.0</a></p>
+        </div>
+        
+        <!-- Card Showcase -->
+        <div class="bg-gradient-to-r from-blue-900 to-purple-900 rounded-lg shadow-xl p-4 mb-8">
+            <div class="grid grid-cols-5 sm:grid-cols-10 gap-2 max-w-7xl mx-auto">
+                <!-- Row 1 -->
+                <div class="text-center cursor-pointer hover:scale-105 transition-transform" onclick="showCardImage('https://www.capsaicin.com/images/A_Spades.png', 'Ace of Spades')">
+                    <div class="bg-white rounded overflow-hidden shadow-lg aspect-[2.5/3.5]">
+                        <img src="https://www.capsaicin.com/images/A_Spades.png" alt="Ace of Spades" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="text-center cursor-pointer hover:scale-105 transition-transform" onclick="showCardImage('https://www.capsaicin.com/images/A_Hearts.png', 'Ace of Hearts')">
+                    <div class="bg-white rounded overflow-hidden shadow-lg aspect-[2.5/3.5]">
+                        <img src="https://www.capsaicin.com/images/A_Hearts.png" alt="Ace of Hearts" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="text-center cursor-pointer hover:scale-105 transition-transform" onclick="showCardImage('https://www.capsaicin.com/images/3_Diamonds.png', '3 of Diamonds')">
+                    <div class="bg-white rounded overflow-hidden shadow-lg aspect-[2.5/3.5]">
+                        <img src="https://www.capsaicin.com/images/3_Diamonds.png" alt="3 of Diamonds" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="text-center cursor-pointer hover:scale-105 transition-transform" onclick="showCardImage('https://www.capsaicin.com/images/4_Hearts.png', '4 of Hearts')">
+                    <div class="bg-white rounded overflow-hidden shadow-lg aspect-[2.5/3.5]">
+                        <img src="https://www.capsaicin.com/images/4_Hearts.png" alt="4 of Hearts" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="text-center cursor-pointer hover:scale-105 transition-transform" onclick="showCardImage('https://www.capsaicin.com/images/5_Diamonds.png', '5 of Diamonds')">
+                    <div class="bg-white rounded overflow-hidden shadow-lg aspect-[2.5/3.5]">
+                        <img src="https://www.capsaicin.com/images/5_Diamonds.png" alt="5 of Diamonds" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="text-center cursor-pointer hover:scale-105 transition-transform" onclick="showCardImage('https://www.capsaicin.com/images/5_Stars.png', '5 of Stars')">
+                    <div class="bg-white rounded overflow-hidden shadow-lg aspect-[2.5/3.5]">
+                        <img src="https://www.capsaicin.com/images/5_Stars.png" alt="5 of Stars" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="text-center cursor-pointer hover:scale-105 transition-transform" onclick="showCardImage('https://www.capsaicin.com/images/6_Diamonds.png', '6 of Diamonds')">
+                    <div class="bg-white rounded overflow-hidden shadow-lg aspect-[2.5/3.5]">
+                        <img src="https://www.capsaicin.com/images/6_Diamonds.png" alt="6 of Diamonds" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="text-center cursor-pointer hover:scale-105 transition-transform" onclick="showCardImage('https://www.capsaicin.com/images/7_Clubs.png', '7 of Clubs')">
+                    <div class="bg-white rounded overflow-hidden shadow-lg aspect-[2.5/3.5]">
+                        <img src="https://www.capsaicin.com/images/7_Clubs.png" alt="7 of Clubs" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="text-center cursor-pointer hover:scale-105 transition-transform" onclick="showCardImage('https://www.capsaicin.com/images/8_Clubs.png', '8 of Clubs')">
+                    <div class="bg-white rounded overflow-hidden shadow-lg aspect-[2.5/3.5]">
+                        <img src="https://www.capsaicin.com/images/8_Clubs.png" alt="8 of Clubs" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="text-center cursor-pointer hover:scale-105 transition-transform" onclick="showCardImage('https://www.capsaicin.com/images/10_Stars.png', '10 of Stars')">
+                    <div class="bg-white rounded overflow-hidden shadow-lg aspect-[2.5/3.5]">
+                        <img src="https://www.capsaicin.com/images/10_Stars.png" alt="10 of Stars" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                
+                <!-- Row 2 -->
+                <div class="text-center cursor-pointer hover:scale-105 transition-transform" onclick="showCardImage('https://www.capsaicin.com/images/J_Hearts.png', 'Jack of Hearts')">
+                    <div class="bg-white rounded overflow-hidden shadow-lg aspect-[2.5/3.5]">
+                        <img src="https://www.capsaicin.com/images/J_Hearts.png" alt="Jack of Hearts" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="text-center cursor-pointer hover:scale-105 transition-transform" onclick="showCardImage('https://www.capsaicin.com/images/Q_Clubs.png', 'Queen of Clubs')">
+                    <div class="bg-white rounded overflow-hidden shadow-lg aspect-[2.5/3.5]">
+                        <img src="https://www.capsaicin.com/images/Q_Clubs.png" alt="Queen of Clubs" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="text-center cursor-pointer hover:scale-105 transition-transform" onclick="showCardImage('https://www.capsaicin.com/images/K_Diamonds.png', 'King of Diamonds')">
+                    <div class="bg-white rounded overflow-hidden shadow-lg aspect-[2.5/3.5]">
+                        <img src="https://www.capsaicin.com/images/K_Diamonds.png" alt="King of Diamonds" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="text-center cursor-pointer hover:scale-105 transition-transform" onclick="showCardImage('https://www.capsaicin.com/images/K_Stars.png', 'King of Stars')">
+                    <div class="bg-white rounded overflow-hidden shadow-lg aspect-[2.5/3.5]">
+                        <img src="https://www.capsaicin.com/images/K_Stars.png" alt="King of Stars" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="text-center cursor-pointer hover:scale-105 transition-transform" onclick="showCardImage('https://www.capsaicin.com/images/JOKER_1.png', 'Joker')">
+                    <div class="bg-white rounded overflow-hidden shadow-lg aspect-[2.5/3.5]">
+                        <img src="https://www.capsaicin.com/images/JOKER_1.png" alt="Joker" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+            <p class="text-white text-xs text-center mt-3 opacity-75">Click any card to view full size • Examples generated by this tool</p>
+        </div>
+        
+        <!-- Card Image Lightbox Modal -->
+        <div id="cardLightbox" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50" onclick="closeCardImage()" style="display:none;">
+            <div class="relative max-w-4xl max-h-screen p-4">
+                <button onclick="closeCardImage()" class="absolute top-2 right-2 text-white text-4xl font-bold hover:text-gray-300 z-10">&times;</button>
+                <img id="lightboxImage" src="" alt="" class="max-w-full max-h-screen object-contain rounded-lg shadow-2xl">
+                <p id="lightboxCaption" class="text-white text-center mt-4 text-lg font-semibold"></p>
+            </div>
+        </div>
+
+        <!-- Upload Progress -->
+        <div id="uploadProgress" class="bg-white rounded-lg shadow-xl p-6 mb-8" style="display:none;">
+            <h2 class="text-2xl font-bold mb-4">⏳ Uploading to Game Crafter...</h2>
+            <div class="mb-4">
+                <div class="w-full bg-gray-200 rounded-full h-4">
+                    <div id="uploadProgressBar" class="bg-green-600 h-4 rounded-full transition-all" style="width: 0%"></div>
+                </div>
+            </div>
+            <div id="uploadProgressText" class="text-sm text-gray-700 mb-2"></div>
+            <div id="uploadProgressDetails" class="text-xs text-gray-600 space-y-1 max-h-64 overflow-y-auto"></div>
+        </div>
+
+        <!-- Upload Complete -->
+        <div id="uploadComplete" class="bg-white rounded-lg shadow-xl p-6 mb-8" style="display:none;">
+            <h2 class="text-2xl font-bold mb-4 text-green-600">✅ Upload Complete!</h2>
+            <div id="uploadCompleteContent"></div>
+        </div>
+
+
+        <!-- Introduction -->
+        <div class="bg-white rounded-lg shadow-xl p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">Welcome!</h2>
+            <p class="mb-4">Create custom playing cards with your own suit icons. Generate standard 4-suit decks or unique 5-suit decks perfect for games like Five Crowns, Phase 10, Skip-Bo, and more!</p>
+            
+            
+            <details class="mb-4">
+                <summary class="font-bold cursor-pointer text-blue-600 hover:text-blue-800">📖 How to Use This Generator</summary>
+                <div class="mt-3 pl-4 text-gray-700">
+                    <ol class="list-decimal list-inside space-y-2">
+                        <li>Configure your deck (4 or 5 suits, pip source, face cards)</li>
+                        <li>Click "Apply Configuration"</li>
+                        <li>Upload or select your suit icons (colors auto-detect from images)</li>
+                        <li>Preview individual cards by clicking rank buttons</li>
+                        <li><strong>Choose one:</strong>
+                            <ul class="list-disc list-inside ml-6 mt-1">
+                                <li>Download all cards as a ZIP file to send to your favorite printer like <a href="https://www.makeplayingcards.com" target="_blank" class="text-blue-600 hover:underline">MakePlayingCards.com</a>, <a href="https://www.thegamecrafter.com" target="_blank" class="text-blue-600 hover:underline">The Game Crafter</a>, or <a href="https://www.printerstudio.com" target="_blank" class="text-blue-600 hover:underline">PrinterStudio</a>, OR</li>
+                                <li>Upload directly to Game Crafter for printing!</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </details>
+
+            <details>
+                <summary class="font-bold cursor-pointer text-blue-600 hover:text-blue-800">🎮 Playing Different Games with Your Deck</summary>
+                <div class="mt-3 pl-4 text-gray-700">
+                    <p class="font-semibold mb-2">5-Suit Double Deck Games:</p>
+                    <ul class="list-disc list-inside mb-3 space-y-1">
+                        <li><strong>Five Crowns:</strong> Use all 116 cards (5 suits × 13 ranks × 2 decks + 6 jokers)</li>
+                        <li><strong>Phase 10:</strong> Use 2 complete 5-suit decks (customize with wild cards)</li>
+                        <li><strong>Skip-Bo:</strong> Number cards from your 5-suit deck work perfectly</li>
+                    </ul>
+                    
+                    <p class="font-semibold mb-2">Traditional 4-Suit Games:</p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Poker, Bridge, Hearts:</strong> Remove one complete suit (use 52 cards)</li>
+                        <li><strong>Pinochle:</strong> Use A, 10, K, Q, J, 9 from all suits</li>
+                        <li><strong>Canasta:</strong> Use two complete 4-suit decks (remove one suit from each)</li>
+                        <li><strong>Rummy:</strong> Use 52 cards (one standard 4-suit deck)</li>
+                    </ul>
+
+                    <p class="mt-3 text-sm text-gray-600">💡 Tip: Print extra jokers or wild cards separately to customize for specific games!</p>
+                </div>
+            </details>
+
+            <details class="mt-4">
+                <summary class="font-bold cursor-pointer text-blue-600 hover:text-blue-800">❓ About Game Crafter Accounts</summary>
+                <div class="mt-3 pl-4 text-gray-700">
+                    <p class="font-semibold mb-2">Why do I need my own account?</p>
+                    <ul class="list-disc list-inside mb-3 space-y-1">
+                        <li><strong>You own your designs</strong> - They appear in your account, not someone else's</li>
+                        <li><strong>Privacy</strong> - Your card designs remain private to you</li>
+                        <li><strong>Control</strong> - You can order prints, set pricing, make changes anytime</li>
+                        <li><strong>No middleman</strong> - Direct relationship with the printer</li>
+                    </ul>
+                    
+                    <p class="font-semibold mb-2">Is it free?</p>
+                    <ul class="list-disc list-inside mb-3 space-y-1">
+                        <li>✅ <strong>FREE</strong> to create account</li>
+                        <li>✅ <strong>FREE</strong> to upload designs</li>
+                        <li>✅ <strong>FREE</strong> to store designs</li>
+                        <li>💰 You only pay when ordering physical prints</li>
+                    </ul>
+
+                    <p class="font-semibold mb-2">How do I create an account?</p>
+                    <ol class="list-decimal list-inside space-y-1">
+                        <li>Visit <a href="https://www.thegamecrafter.com/account" target="_blank" class="text-blue-600 hover:underline">thegamecrafter.com/join</a></li>
+                        <li>Fill in username, email, password (takes 2 minutes)</li>
+                        <li>Verify your email</li>
+                        <li>Come back here and click "Upload to Game Crafter"!</li>
+                    </ol>
+
+                    <p class="mt-3 text-sm text-gray-600">
+                        🔒 <strong>Security:</strong> Your username and password are only used to upload cards to YOUR account. 
+                        They are never stored on this website.
+                    </p>
+                </div>
+            </details>
+        </div>
+
+        <!-- Configuration -->
+        <div class="bg-white rounded-lg shadow-xl p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4">Configuration</h2>
+            
+            <div class="mb-4">
+                <label class="block font-bold mb-2">Number of Suits:</label>
+                <div class="space-y-2">
+                    <label class="block"><input type="radio" name="suits" value="4" checked class="mr-2">4 Suits</label>
+                    <label class="block"><input type="radio" name="suits" value="5" class="mr-2">5 Suits</label>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-bold mb-2">Suits (Pips):</label>
+                <div class="space-y-2">
+                    <label class="block"><input type="radio" name="pipSource" value="upload" checked class="mr-2">Upload my own</label>
+                    <label class="block"><input type="radio" name="pipSource" value="library" class="mr-2">Select from library</label>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-bold mb-2">Face Cards (Courts):</label>
+                <label class="block"><input type="radio" name="faces" value="blank" checked class="mr-2">Blank (I'll add later)</label>
+                <label class="block"><input type="radio" name="faces" value="library" class="mr-2">Select individual court images from Library</label>
+                <label class="block"><input type="radio" name="faces" value="three" class="mr-2">Upload 3 images (J, Q, K)</label>
+                <label class="block"><input type="radio" name="faces" value="individual" class="mr-2">Upload individual images for each Jack, Queen, and King (12 or 15 in total)</label>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-bold mb-2">Jokers:</label>
+                <div id="jokerOptions" class="min-h-[120px]">
+                    <label class="block"><input type="radio" name="jokers" value="0" checked class="mr-2">No jokers (52 cards)</label>
+                    <label class="block"><input type="radio" name="jokers" value="2" class="mr-2">2 Jokers (54 cards) - Standard deck</label>
+                </div>
+            </div>
+
+            <div class="mb-4" id="jokerSourceDiv" style="display:none;">
+                <label class="block font-bold mb-2">Joker Source:</label>
+                <label class="block"><input type="radio" name="jokerSource" value="upload" checked class="mr-2">Upload one image (used for all jokers)</label>
+                <label class="block" id="jokerIndividualOption" style="display:none;"><input type="radio" name="jokerSource" value="individual" class="mr-2">Upload 3 separate images (WILD, SKIP, JOKER)</label>
+                <label class="block"><input type="radio" name="jokerSource" value="library" class="mr-2">Select one image from library (used for all jokers)</label>
+                <label class="block" id="jokerLibraryIndividualOption" style="display:none;"><input type="radio" name="jokerSource" value="library-individual" class="mr-2">Select 3 separate images from library (WILD, SKIP, JOKER)</label>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-bold mb-2">Safety Margins:</label>
+                <div class="space-y-2">
+                    <label class="block"><input type="radio" name="margins" value="tight" checked class="mr-2">Tight - Standard layout</label>
+                    <label class="block"><input type="radio" name="margins" value="safe" class="mr-2">Safe - 50px extra margin (more space from edges)</label>
+                </div>
+                <p class="text-xs text-gray-600 mt-2">💡 Choose "Safe" if indices are getting too close to edges when printed</p>
+            </div>
+
+            <!-- Game Crafter Credentials Section -->
+            <div class="mb-4 border-t-2 border-blue-200 pt-4">
+                <details class="mb-4">
+                    <summary class="font-bold cursor-pointer text-blue-600 hover:text-blue-800 mb-2">🔐 Game Crafter Credentials (Required for Upload)</summary>
+                    <div class="mt-4 p-4 bg-blue-50 rounded-lg space-y-4">
+                        <p class="text-sm text-gray-700 mb-3">Enter your Game Crafter account credentials to enable deck uploading. These are stored in your browser only and never sent anywhere except The Game Crafter.</p>
+                        
+                        <div>
+                            <label class="block font-bold mb-1">Username (Email):</label>
+                            <input type="email" id="gcUsername" placeholder="your.email@example.com" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded">
+                        </div>
+                        
+                        <div>
+                            <label class="block font-bold mb-1">Password:</label>
+                            <input type="password" id="gcPassword" placeholder="Your Game Crafter password" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded">
+                        </div>
+                        
+                        <div>
+                            <label class="block font-bold mb-1">Public API Key:</label>
+                            <input type="text" id="gcPublicKey" placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded font-mono text-sm">
+                            <p class="text-xs text-gray-600 mt-1">
+                                📝 Find your API key: <a href="https://www.thegamecrafter.com/account/apikeys" target="_blank" class="text-blue-600 hover:underline">Game Crafter → Account → API Keys</a>
+                            </p>
+                        </div>
+                        
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mt-3">
+                            <p class="text-sm text-yellow-800">
+                                💡 <strong>Tip:</strong> Your credentials are only stored in your browser's memory while using this page. They are cleared when you close the tab.
+                            </p>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <button onclick="applyConfig()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded">
+                Apply Configuration
+            </button>
+        </div>
+
+        <!-- Suit Section -->
+        <div id="suitSection" class="bg-white rounded-lg shadow-xl p-6 mb-8" style="display:none;">
+            <h2 class="text-2xl font-bold mb-4" id="suitTitle">Step 1</h2>
+            <div id="suitGrid" class="grid grid-cols-1 md:grid-cols-5 gap-4"></div>
+        </div>
+
+        <!-- Face Card Selection Section -->
+        <div id="faceLibrarySection" class="bg-white rounded-lg shadow-xl p-6 mb-8" style="display:none;">
+            <h2 class="text-2xl font-bold mb-4">Step 2: Select Court Cards</h2>
+            <div id="courtSelectionGrid"></div>
+        </div>
+
+        <!-- Face Upload Section -->
+        <div id="faceSection" class="bg-white rounded-lg shadow-xl p-6 mb-8" style="display:none;">
+            <h2 class="text-2xl font-bold mb-4">Step 2: Upload Face Card Images</h2>
+            <div id="faceGrid" class="flex gap-4"></div>
+        </div>
+
+        <!-- Individual Face Card Upload Section -->
+        <div id="faceIndividualSection" class="bg-white rounded-lg shadow-xl p-6 mb-8" style="display:none;">
+            <h2 class="text-2xl font-bold mb-4" id="individualFaceTitle">Step 2: Upload Individual Face Card Images</h2>
+            <div id="individualFaceGrid" class="grid grid-cols-3 gap-4"></div>
+        </div>
+
+        <!-- Joker Section -->
+        <div id="jokerSection" class="bg-white rounded-lg shadow-xl p-6 mb-8" style="display:none;">
+            <h2 class="text-2xl font-bold mb-4">Joker Image</h2>
+            
+            <!-- Upload Interface -->
+            <div id="jokerUploadDiv">
+                <div class="border-2 border-dashed rounded-lg p-8 text-center">
+                    <label class="cursor-pointer block">
+                        <div id="jokerUploadPreview">
+                            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                            <span class="text-gray-500">Upload Joker Image</span>
+                            <p class="text-sm text-gray-400 mt-2">This image will be used for all joker cards</p>
+                        </div>
+                        <img id="jokerUploadImage" style="display:none; max-height:300px;" class="mx-auto">
+                        <input type="file" id="jokerUploadInput" accept="image/*" class="hidden">
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Library Interface -->
+            <div id="jokerLibraryDiv" style="display:none;">
+                <div id="jokerGallery" class="grid grid-cols-4 gap-4"></div>
+            </div>
+        </div>
+
+        <!-- Individual Joker Upload Section -->
+        <div id="jokerIndividualSection" class="bg-white rounded-lg shadow-xl p-6 mb-8" style="display:none;">
+            <h2 class="text-2xl font-bold mb-4">Upload Individual Joker Images</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- WILD -->
+                <div class="border-2 rounded-lg p-4">
+                    <h3 class="font-bold text-center mb-2">WILD (4 cards)</h3>
+                    <label class="block cursor-pointer">
+                        <div id="wildArea" class="h-48 border-2 border-dashed rounded flex items-center justify-center">
+                            <span class="text-gray-400">Upload</span>
+                        </div>
+                        <input type="file" id="wildFile" accept="image/*" class="hidden">
+                    </label>
+                </div>
+                
+                <!-- SKIP -->
+                <div class="border-2 rounded-lg p-4">
+                    <h3 class="font-bold text-center mb-2">SKIP (2 cards)</h3>
+                    <label class="block cursor-pointer">
+                        <div id="skipArea" class="h-48 border-2 border-dashed rounded flex items-center justify-center">
+                            <span class="text-gray-400">Upload</span>
+                        </div>
+                        <input type="file" id="skipFile" accept="image/*" class="hidden">
+                    </label>
+                </div>
+                
+                <!-- JOKER -->
+                <div class="border-2 rounded-lg p-4">
+                    <h3 class="font-bold text-center mb-2">JOKER (1 card)</h3>
+                    <label class="block cursor-pointer">
+                        <div id="jokerArea" class="h-48 border-2 border-dashed rounded flex items-center justify-center">
+                            <span class="text-gray-400">Upload</span>
+                        </div>
+                        <input type="file" id="jokerFile" accept="image/*" class="hidden">
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Library Individual Joker Selection Section -->
+        <div id="jokerLibraryIndividualSection" class="bg-white rounded-lg shadow-xl p-6 mb-8" style="display:none;">
+            <h2 class="text-2xl font-bold mb-4">Select Individual Joker Images from Library</h2>
+            
+            <div class="mb-6">
+                <h3 class="font-bold text-lg mb-3">WILD (4 cards)</h3>
+                <div id="wildLibraryGallery" class="grid grid-cols-4 gap-4 mb-6"></div>
+            </div>
+            
+            <div class="mb-6">
+                <h3 class="font-bold text-lg mb-3">SKIP (2 cards)</h3>
+                <div id="skipLibraryGallery" class="grid grid-cols-4 gap-4 mb-6"></div>
+            </div>
+            
+            <div>
+                <h3 class="font-bold text-lg mb-3">JOKER (1 card)</h3>
+                <div id="jokerLibraryGallery" class="grid grid-cols-4 gap-4"></div>
+            </div>
+        </div>
+
+        <!-- Card Back Upload Section -->
+        <div id="cardBackSection" class="bg-white rounded-lg shadow-xl p-6 mb-8" style="display:none;">
+            <h2 class="text-2xl font-bold mb-4">Card Back (Optional)</h2>
+            <p class="text-gray-600 mb-4">Upload an image for the back of all cards. If not provided, a default blue gradient will be used.</p>
+            
+            <div class="border-2 border-dashed rounded-lg p-8 text-center">
+                <label class="cursor-pointer block">
+                    <div id="cardBackUploadPreview">
+                        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
+                        <span class="text-gray-500">Upload Card Back Image</span>
+                        <p class="text-sm text-gray-400 mt-2">Recommended: 825×1125 px (Game Crafter size)</p>
+                    </div>
+                    <div id="cardBackImageContainer" style="display:none;" class="relative">
+                        <img id="cardBackImage" style="max-height:300px;" class="mx-auto mb-4">
+                        <p class="text-sm text-gray-600 mt-2">✓ Card back uploaded. Preview it below to resize.</p>
+                        <button type="button" onclick="clearCardBack()" class="mt-2 text-sm text-red-600 hover:text-red-800">
+                            ✕ Remove Image (use default)
+                        </button>
+                    </div>
+                    <input type="file" id="cardBackUploadInput" accept="image/*" class="hidden">
+                </label>
+            </div>
+        </div>
+
+        <!-- Card Selection -->
+        <div id="cardSection" class="bg-white rounded-lg shadow-xl p-6 mb-8" style="display:none;">
+            <h2 class="text-2xl font-bold mb-4">Preview Individual Cards</h2>
+            
+            <div id="cardGrid"></div>
+            
+            <!-- Action Buttons -->
+            <div class="mt-6 grid grid-cols-2 gap-4">
+                <button onclick="downloadAll()" 
+                    class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg flex flex-col items-center justify-center gap-2 group transition-all">
+                    <span class="text-3xl">📦</span>
+                    <span>Download ZIP</span>
+                </button>
+                
+                <button onclick="uploadToGameCrafterDirect()" 
+                    class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-6 rounded-lg flex flex-col items-center justify-center gap-2 group transition-all">
+                    <span class="text-3xl">🚀</span>
+                    <span>Upload to Game Crafter</span>
+                </button>
+            </div>
+            
+            <!-- Info Note -->
+            <div class="mt-4 text-center text-sm text-gray-600">
+                <p>💡 After upload, enable <strong>Linen Finish</strong> in Game Crafter for best quality!</p>
+            </div>
+        </div>
+
+        <!-- Preview -->
+        <div id="previewSection" class="bg-white rounded-lg shadow-xl p-6" style="display:none;">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold" id="previewTitle">Preview</h2>
+                <button onclick="downloadOne()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Download This Card
+                </button>
+            </div>
+            
+            <!-- Resize Controls -->
+            <div id="previewResizeControls" class="mb-4 p-4 bg-gray-50 rounded-lg" style="display:none;">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Pip Resize -->
+                    <div id="previewPipResize" style="display:none;">
+                        <label class="block font-bold mb-2">Pip Size: <span id="previewPipScale">100</span>%</label>
+                        <input type="range" id="previewPipSlider" min="50" max="150" value="100" 
+                               class="w-full" onchange="updatePipSizeFromPreview(this.value)">
+                    </div>
+                    
+                    <!-- Court Resize -->
+                    <div id="previewCourtResize" style="display:none;">
+                        <label class="block font-bold mb-2">Court Size: <span id="previewCourtScale">100</span>%</label>
+                        <input type="range" id="previewCourtSlider" min="50" max="150" value="100" 
+                               class="w-full" onchange="updateCourtSizeFromPreview(this.value)">
+                    </div>
+                    
+                    <!-- Joker Resize -->
+                    <div id="previewJokerResize" style="display:none;">
+                        <label class="block font-bold mb-2">Joker Size: <span id="previewJokerScale">100</span>%</label>
+                        <input type="range" id="previewJokerSlider" min="50" max="150" value="100" 
+                               class="w-full" onchange="updateJokerSizeFromPreview(this.value)">
+                    </div>
+                    
+                    <!-- Card Back Resize -->
+                    <div id="previewCardBackResize" style="display:none;">
+                        <label class="block font-bold mb-2">Card Back Size: <span id="previewCardBackScale">100</span>%</label>
+                        <input type="range" id="previewCardBackSlider" min="50" max="150" value="100" 
+                               class="w-full" onchange="updateCardBackSizeFromPreview(this.value)">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Overlay Toggle Button -->
+            <div class="mb-4 text-center">
+                <button id="overlayToggleBtn" onclick="toggleOverlay()" 
+                    class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg text-lg">
+                    🔍 Preview with Cut and Bleed Template: <span id="overlayStatus">OFF</span>
+                </button>
+            </div>
+            
+            <!-- Canvas Container with Overlay -->
+            <div class="relative inline-block mx-auto">
+                <canvas id="previewCanvas" class="border-4 border-gray-300 rounded" style="max-width:100%; max-height:600px; display:block;"></canvas>
+                <canvas id="overlayCanvas" style="position:absolute; top:0; left:0; pointer-events:none; display:none;"></canvas>
+            </div>
+        </div>
+
+        <canvas id="hiddenCanvas" style="display:none;"></canvas>
+    </div>
+
+    <!-- Footer -->
+    <footer class="max-w-7xl mx-auto mt-16 pb-8 px-8">
+        <div class="bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg shadow-xl p-8 text-white">
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- About -->
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-blue-400">About This Tool</h3>
+                    <p class="text-sm text-gray-300 mb-3">
+                        A free, open-source playing card generator created by Dan Atkins. 
+                        Design custom decks with your own suit icons, court cards, and jokers. 
+                        Generate high-resolution cards for professional printing.
+                    </p>
+                    <p class="text-xs text-gray-400">
+                        Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="text-blue-400 hover:text-blue-300 underline">Creative Commons Attribution-ShareAlike 4.0</a>
+                    </p>
+                </div>
+                
+                <!-- GitHub & Source -->
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-blue-400">Open Source</h3>
+                    <div class="space-y-2">
+                        <a href="https://github.com/SanityVacuum" target="_blank" 
+                           class="flex items-center gap-2 text-sm text-gray-300 hover:text-white transition-colors group">
+                            <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                            </svg>
+                            <span>View on GitHub</span>
+                        </a>
+                        <a href="https://github.com/SanityVacuum/playing-card-generator" target="_blank" 
+                           class="flex items-center gap-2 text-sm text-gray-300 hover:text-white transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                            </svg>
+                            <span>Source Code</span>
+                        </a>
+                        <a href="https://github.com/SanityVacuum/playing-card-generator/issues" target="_blank" 
+                           class="flex items-center gap-2 text-sm text-gray-300 hover:text-white transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                            </svg>
+                            <span>Report Issues</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Contact & Support -->
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-blue-400">Contact & Support</h3>
+                    <div class="space-y-2">
+                        <a href="mailto:dan.atkins@gmail.com" 
+                           class="flex items-center gap-2 text-sm text-gray-300 hover:text-white transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            <span>dan.atkins@gmail.com</span>
+                        </a>
+                        <div class="text-sm text-gray-400 mt-4">
+                            <p class="mb-2"><strong class="text-gray-300">Found this useful?</strong></p>
+                            <ul class="list-disc list-inside space-y-1 text-xs">
+                                <li>⭐ Star the repository on GitHub</li>
+                                <li>🐛 Report bugs or suggest features</li>
+                                <li>🤝 Contribute improvements</li>
+                                <li>📢 Share with others</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Bar -->
+            <div class="mt-8 pt-6 border-t border-gray-700 text-center">
+                <p class="text-sm text-gray-400">
+                    © 2024-2025 Dan Atkins | 
+                    <a href="https://www.capsaicin.com" target="_blank" class="text-blue-400 hover:text-blue-300">capsaicin.com</a> | 
+                    <a href="https://www.danalytics.net" target="_blank" class="text-blue-400 hover:text-blue-300">danalytics.net</a> | 
+                    <a href="https://www.sanityvacuum.com" target="_blank" class="text-blue-400 hover:text-blue-300">sanityvacuum.com</a>
+                </p>
+                <p class="text-xs text-gray-500 mt-2">
+                    Compatible with <a href="https://www.makeplayingcards.com" target="_blank" class="text-blue-400 hover:text-blue-300">MakePlayingCards.com</a>, 
+                    <a href="https://www.thegamecrafter.com" target="_blank" class="text-blue-400 hover:text-blue-300">The Game Crafter</a>, 
+                    and <a href="https://www.printerstudio.com" target="_blank" class="text-blue-400 hover:text-blue-300">PrinterStudio</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global config and data
+        const config = { 
+            margins: 'tight',
+            suitCount: 4, 
+            pipSource: 'upload', 
+            faceOption: 'blank',
+            jokerCount: 0,
+            jokerSource: 'upload'
+        };
+        
+        const pipLibrary = {
+            'anchor': { name: '⚓ Anchor', url: 'https://www.capsaicin.com/pips/anchor-pip.svg', color: '#000000' },
+            'baseball': { name: '⚾ Baseball', url: 'https://www.capsaicin.com/pips/sport-baseball-pip.png', color: '#C41E3A' },
+            'basketball': { name: '🏀 Basketball', url: 'https://www.capsaicin.com/pips/sport-basketball-pip.png', color: '#C8512D' },
+            'bear': { name: '🐻 Bear', url: 'https://www.capsaicin.com/pips/bear-pip.png', color: '#4A2511' },
+            'clubs': { name: '♣ Clubs', url: 'https://www.capsaicin.com/pips/club-pip.svg', color: '#000000' },
+            'crown': { name: '👑 Crown', url: 'https://www.capsaicin.com/pips/crown-pip.svg', color: '#B8860B' },
+            'diamonds': { name: '♦ Diamonds', url: 'https://www.capsaicin.com/pips/diamond-pip.svg', color: '#C41E3A' },
+            'dunk': { name: '🏀 Dunk', url: 'https://www.capsaicin.com/pips/dunk-pip.png', color: '#C8512D' },
+            'f16': { name: '✈️ F-16', url: 'https://www.capsaicin.com/pips/F-16-pip.png', color: '#1E3A8A' },
+            'football': { name: '🏈 Football', url: 'https://www.capsaicin.com/pips/sport-football-pip.png', color: '#5C3317' },
+            'hearts': { name: '♥ Hearts', url: 'https://www.capsaicin.com/pips/heart-pip.svg', color: '#C41E3A' },
+            'hockey': { name: '🏒 Hockey', url: 'https://www.capsaicin.com/pips/sport-hockey-pip.png', color: '#000000' },
+            'rx': { name: '💊 Pharmacy', url: 'https://www.capsaicin.com/pips/rx-pip.png', color: '#1E3A8A' },
+            'soccer': { name: '⚽ Soccer', url: 'https://www.capsaicin.com/pips/sport-soccer-pip.png', color: '#000000' },
+            'spades': { name: '♠ Spades', url: 'https://www.capsaicin.com/pips/spade-pip.svg', color: '#000000' },
+            'star': { name: '⭐ Star', url: 'https://www.capsaicin.com/pips/star-pip.svg', color: '#B8860B' },
+            'wine': { name: '🍷 Wine Glass', url: 'https://www.capsaicin.com/pips/wine-pip.png', color: '#5C1F2E' },
+            'wolf': { name: '🐺 Wolf', url: 'https://www.capsaicin.com/pips/wolf-pip.png', color: '#4A4A4A' }
+        };
+
+        const courtLibrary = {
+            'jack1': { name: 'Jack (Classic)', url: 'https://www.capsaicin.com/courts/jack-classic.png' },
+            'jack2': { name: 'Jack (Modern)', url: 'https://www.capsaicin.com/courts/jack-modern.png' },
+            'jack3': { name: 'Jack (Minimalist)', url: 'https://www.capsaicin.com/courts/jack-minimal.png' },
+            'queen1': { name: 'Queen (Classic)', url: 'https://www.capsaicin.com/courts/queen-classic.png' },
+            'queen2': { name: 'Queen (Modern)', url: 'https://www.capsaicin.com/courts/queen-modern.png' },
+            'queen3': { name: 'Queen (Minimalist)', url: 'https://www.capsaicin.com/courts/queen-minimal.png' },
+            'king1': { name: 'King (Classic)', url: 'https://www.capsaicin.com/courts/king-classic.png' },
+            'king2': { name: 'King (Modern)', url: 'https://www.capsaicin.com/courts/king-modern.png' },
+            'king3': { name: 'King (Minimalist)', url: 'https://www.capsaicin.com/courts/king-minimal.png' }
+        };
+
+        const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+        const suitNames = ['Hearts', 'Diamonds', 'Clubs', 'Spades', 'Stars'];
+        const suits = [];
+        const faceImages = { J: null, Q: null, K: null };
+        const individualFaceImages = {}; // Stores individual images per suit: {Hearts: {J: url, Q: url, K: url}, ...}
+        
+        // Store resize settings for each image
+        const imageResizeSettings = {
+            pips: {}, // {suitIndex: scale}
+            courts: {}, // {rank: scale} for 'three' option
+            individualCourts: {}, // {suitName-rank: scale} for 'individual' option
+            jokers: { WILD: 1.0, SKIP: 1.0, JOKER: 1.0 } // Individual joker resize scales
+        };
+        
+        // Load image with or without CORS based on whether we need pixel access
+        function loadImage(src, needPixelAccess, callback) {
+            const img = new Image();
+            if (needPixelAccess) {
+                img.crossOrigin = 'anonymous';
+            }
+            img.onload = () => callback(img);
+            img.onerror = () => callback(null);
+            img.src = src;
+        }
+        
+        // Auto-crop function: removes pure white (#FFFFFF) and transparent borders
+        function autoCropImage(imageSrc, callback) {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';  // Need pixel access for cropping
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const pixels = imageData.data;
+                
+                let minX = canvas.width, minY = canvas.height, maxX = 0, maxY = 0;
+                
+                // Scan all pixels to find content bounds
+                for (let y = 0; y < canvas.height; y++) {
+                    for (let x = 0; x < canvas.width; x++) {
+                        const i = (y * canvas.width + x) * 4;
+                        const r = pixels[i];
+                        const g = pixels[i + 1];
+                        const b = pixels[i + 2];
+                        const a = pixels[i + 3];
+                        
+                        // Check if pixel is NOT white or transparent
+                        const isWhite = (r === 255 && g === 255 && b === 255);
+                        const isTransparent = (a < 10);
+                        
+                        if (!isWhite && !isTransparent) {
+                            if (x < minX) minX = x;
+                            if (x > maxX) maxX = x;
+                            if (y < minY) minY = y;
+                            if (y > maxY) maxY = y;
+                        }
+                    }
+                }
+                
+                // If no content found, return original
+                if (minX > maxX || minY > maxY) {
+                    console.log('No content found, using original image');
+                    callback(imageSrc);
+                    return;
+                }
+                
+                // Add 1px padding to avoid edge clipping
+                minX = Math.max(0, minX - 1);
+                minY = Math.max(0, minY - 1);
+                maxX = Math.min(canvas.width - 1, maxX + 1);
+                maxY = Math.min(canvas.height - 1, maxY + 1);
+                
+                const croppedWidth = maxX - minX + 1;
+                const croppedHeight = maxY - minY + 1;
+                
+                console.log(`Auto-cropped: ${canvas.width}×${canvas.height} → ${croppedWidth}×${croppedHeight} (removed ${canvas.width - croppedWidth}px width, ${canvas.height - croppedHeight}px height)`);
+                
+                // Create cropped canvas
+                const croppedCanvas = document.createElement('canvas');
+                croppedCanvas.width = croppedWidth;
+                croppedCanvas.height = croppedHeight;
+                const croppedCtx = croppedCanvas.getContext('2d');
+                croppedCtx.drawImage(canvas, minX, minY, croppedWidth, croppedHeight, 0, 0, croppedWidth, croppedHeight);
+                
+                // Return cropped image as data URL
+                callback(croppedCanvas.toDataURL('image/png'));
+            };
+            img.onerror = function() {
+                console.error('Failed to load image for cropping');
+                callback(imageSrc);
+            };
+            img.src = imageSrc;
+        }
+        const selectedCourts = { J: null, Q: null, K: null };
+        let selectedCard = null;
+        
+        // Joker system
+        let jokerImage = null;
+        let jokerLibraryList = [];
+        let selectedJokerKey = null;
+        let individualJokerImages = { WILD: null, SKIP: null, JOKER: null };
+        let selectedLibraryJokers = { WILD: null, SKIP: null, JOKER: null };
+        
+        // Card back system
+        let cardBackImage = null;
+        let cardBackScale = 1.0;
+        
+        // Overlay system
+        let overlayEnabled = false;
+        let overlayImage = null;
+
+        const pipPositions = {
+            '2': [[0.5, 0.25], [0.5, 0.75]],
+            '3': [[0.5, 0.25], [0.5, 0.5], [0.5, 0.75]],
+            '4': [[0.3, 0.25], [0.7, 0.25], [0.3, 0.75], [0.7, 0.75]],
+            '5': [[0.3, 0.25], [0.7, 0.25], [0.5, 0.5], [0.3, 0.75], [0.7, 0.75]],
+            '6': [[0.3, 0.25], [0.7, 0.25], [0.3, 0.5], [0.7, 0.5], [0.3, 0.75], [0.7, 0.75]],
+            '7': [[0.3, 0.25], [0.7, 0.25], [0.3, 0.5], [0.5, 0.37], [0.7, 0.5], [0.3, 0.75], [0.7, 0.75]],
+            '8': [[0.3, 0.25], [0.7, 0.25], [0.3, 0.42], [0.7, 0.42], [0.3, 0.58], [0.7, 0.58], [0.3, 0.75], [0.7, 0.75]],
+            '9': [[0.3, 0.22], [0.7, 0.22], [0.3, 0.4], [0.7, 0.4], [0.5, 0.5], [0.3, 0.6], [0.7, 0.6], [0.3, 0.78], [0.7, 0.78]],
+            '10': [[0.3, 0.2], [0.7, 0.2], [0.5, 0.3], [0.3, 0.42], [0.7, 0.42], [0.3, 0.58], [0.7, 0.58], [0.5, 0.7], [0.3, 0.8], [0.7, 0.8]]
+        };
+
+        function applyConfig() {
+            config.margins = document.querySelector('input[name="margins"]:checked').value;
+            config.suitCount = parseInt(document.querySelector('input[name="suits"]:checked').value);
+            config.pipSource = document.querySelector('input[name="pipSource"]:checked').value;
+            config.faceOption = document.querySelector('input[name="faces"]:checked').value;
+            
+            // Preserve joker count and source before rebuilding
+            const jokerRadio = document.querySelector('input[name="jokers"]:checked');
+            if (jokerRadio) {
+                config.jokerCount = parseInt(jokerRadio.value);
+            }
+            const jokerSourceRadio = document.querySelector('input[name="jokerSource"]:checked');
+            if (jokerSourceRadio) {
+                config.jokerSource = jokerSourceRadio.value;
+            }
+            
+            console.log('Config applied:', config);
+            
+            // Reset pip selections when config changes
+            selectedPipKeys.length = 0;
+            
+            // Update joker options based on suit count
+            const jokerDiv = document.getElementById('jokerOptions');
+            const jokerSourceDiv = document.getElementById('jokerSourceDiv');
+            
+            // Preserve current joker selection
+            const currentJokerValue = config.jokerCount || 0;
+            
+            if (config.suitCount === 4) {
+                jokerDiv.innerHTML = `
+                    <label class="block"><input type="radio" name="jokers" value="0" ${currentJokerValue === 0 ? 'checked' : ''} class="mr-2">No jokers (52 cards)</label>
+                    <label class="block"><input type="radio" name="jokers" value="2" ${currentJokerValue === 2 ? 'checked' : ''} class="mr-2">2 Jokers (54 cards) - Standard deck</label>
+                `;
+            } else {
+                jokerDiv.innerHTML = `
+                    <label class="block"><input type="radio" name="jokers" value="0" ${currentJokerValue === 0 ? 'checked' : ''} class="mr-2">No jokers (65 cards)</label>
+                    <label class="block">
+                        <input type="radio" name="jokers" value="7" ${currentJokerValue === 7 ? 'checked' : ''} class="mr-2">7 Jokers (72 cards) - Game deck
+                        <div class="ml-6 mt-1 text-sm text-gray-600">
+                            <p>✓ 4 cards: "WILD" (Phase 10, Five Crowns)</p>
+                            <p>✓ 2 cards: "SKIP" (Phase 10, Skip-Bo)</p>
+                            <p>✓ 1 card: "JOKER" (Ultimate Wild)</p>
+                        </div>
+                    </label>
+                `;
+            }
+            
+            // Update visibility based on current selection
+            jokerSourceDiv.style.display = currentJokerValue > 0 ? 'block' : 'none';
+            
+            // Show appropriate joker section based on source
+            const showJokerSections = () => {
+                const hasJokers = config.jokerCount > 0;
+                const is7Jokers = config.jokerCount === 7;
+                
+                // Show/hide individual options based on joker count
+                const individualOption = document.getElementById('jokerIndividualOption');
+                const libraryIndividualOption = document.getElementById('jokerLibraryIndividualOption');
+                
+                if (individualOption) {
+                    individualOption.style.display = is7Jokers ? 'block' : 'none';
+                }
+                if (libraryIndividualOption) {
+                    libraryIndividualOption.style.display = is7Jokers ? 'block' : 'none';
+                }
+                
+                // If switching away from 7 jokers and individual was selected, reset to upload
+                if (!is7Jokers && (config.jokerSource === 'individual' || config.jokerSource === 'library-individual')) {
+                    config.jokerSource = 'upload';
+                    const uploadRadio = document.querySelector('input[name="jokerSource"][value="upload"]');
+                    if (uploadRadio) uploadRadio.checked = true;
+                }
+                
+                document.getElementById('jokerSection').style.display = 
+                    (hasJokers && (config.jokerSource === 'upload' || config.jokerSource === 'library')) ? 'block' : 'none';
+                document.getElementById('jokerIndividualSection').style.display = 
+                    (hasJokers && is7Jokers && config.jokerSource === 'individual') ? 'block' : 'none';
+                document.getElementById('jokerLibraryIndividualSection').style.display = 
+                    (hasJokers && is7Jokers && config.jokerSource === 'library-individual') ? 'block' : 'none';
+            };
+            
+            showJokerSections();
+            
+            // Add change listeners for joker radios
+            setTimeout(() => {
+                document.querySelectorAll('input[name="jokers"]').forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        config.jokerCount = parseInt(this.value);
+                        jokerSourceDiv.style.display = config.jokerCount > 0 ? 'block' : 'none';
+                        showJokerSections();
+                        
+                        if (config.jokerCount > 0 && config.jokerSource === 'library') {
+                            loadJokerLibrary();
+                        }
+                        buildCardSection();
+                    });
+                });
+                
+                document.querySelectorAll('input[name="jokerSource"]').forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        config.jokerSource = this.value;
+                        
+                        // Handle visibility for all joker sections
+                        document.getElementById('jokerUploadDiv').style.display = config.jokerSource === 'upload' ? 'block' : 'none';
+                        document.getElementById('jokerLibraryDiv').style.display = config.jokerSource === 'library' ? 'block' : 'none';
+                        showJokerSections();
+                        
+                        if (config.jokerSource === 'library') {
+                            loadJokerLibrary();
+                        } else if (config.jokerSource === 'library-individual') {
+                            loadJokerLibrary().then(() => buildIndividualJokerLibraryGalleries());
+                        }
+                    });
+                });
+            }, 100);
+            
+            buildSuitSection();
+            buildCardSection();
+            
+            // Show the suit section after applying config
+            document.getElementById('suitSection').style.display = 'block';
+            
+            // Show appropriate face card section
+            document.getElementById('faceSection').style.display = 'none';
+            document.getElementById('faceLibrarySection').style.display = 'none';
+            document.getElementById('faceIndividualSection').style.display = 'none';
+            
+            console.log('Face option selected:', config.faceOption);
+            
+            if (config.faceOption === 'three') {
+                console.log('Building 3-image face upload');
+                buildFaceUpload();
+                document.getElementById('faceSection').style.display = 'block';
+            } else if (config.faceOption === 'library') {
+                console.log('Building court library');
+                buildCourtLibrary();
+                document.getElementById('faceLibrarySection').style.display = 'block';
+                console.log('faceLibrarySection display set to block');
+            } else if (config.faceOption === 'individual') {
+                console.log('Building individual face upload');
+                buildIndividualFaceUpload();
+                document.getElementById('faceIndividualSection').style.display = 'block';
+            }
+        }
+
+        // Joker upload handler
+        setTimeout(() => {
+            const jokerInput = document.getElementById('jokerUploadInput');
+            if (jokerInput) {
+                jokerInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        jokerImage = event.target.result;
+                        document.getElementById('jokerUploadPreview').style.display = 'none';
+                        document.getElementById('jokerUploadImage').src = jokerImage;
+                        document.getElementById('jokerUploadImage').style.display = 'block';
+                        buildCardSection();
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+            
+            // Individual joker upload handlers
+            ['WILD', 'SKIP', 'JOKER'].forEach(type => {
+                const fileId = type.toLowerCase() + 'File';
+                const areaId = type.toLowerCase() + 'Area';
+                const input = document.getElementById(fileId);
+                
+                if (input) {
+                    input.addEventListener('change', function(e) {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            individualJokerImages[type] = event.target.result;
+                            document.getElementById(areaId).innerHTML = 
+                                `<img src="${event.target.result}" class="w-full h-full object-contain">`;
+                            buildCardSection();
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
+            });
+        }, 500);
+        
+        // Card back upload setup function (called when section is shown)
+        function setupCardBackUpload() {
+            console.log('🔧 Setting up card back upload...');
+            
+            const cardBackInput = document.getElementById('cardBackUploadInput');
+            if (!cardBackInput) {
+                console.error('❌ Card back input not found!');
+                return;
+            }
+            console.log('✅ Found card back input element');
+            
+            // Direct click test
+            const uploadPreview = document.getElementById('cardBackUploadPreview');
+            if (uploadPreview) {
+                uploadPreview.addEventListener('click', function() {
+                    console.log('🖱️ Upload area clicked - triggering file input');
+                    cardBackInput.click();
+                });
+                console.log('✅ Click handler added to upload preview area');
+            }
+            
+            // File change handler
+            cardBackInput.addEventListener('change', function(e) {
+                console.log('📂 File input change event fired');
+                const file = e.target.files[0];
+                if (!file) {
+                    console.log('⚠️ No file selected');
+                    return;
+                }
+                
+                console.log('📤 Card back file selected:', file.name, file.size, 'bytes');
+                
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    cardBackImage = event.target.result;
+                    console.log('✅ Image loaded into memory');
+                    
+                    document.getElementById('cardBackUploadPreview').style.display = 'none';
+                    document.getElementById('cardBackImage').src = cardBackImage;
+                    document.getElementById('cardBackImageContainer').style.display = 'block';
+                    console.log('✅ Card back preview updated');
+                };
+                reader.onerror = (error) => {
+                    console.error('❌ Error reading file:', error);
+                };
+                reader.readAsDataURL(file);
+            });
+            console.log('✅ File change handler attached');
+            
+            console.log('✅ Card back upload fully configured');
+        }
+        
+        // Clear card back function
+        function clearCardBack() {
+            cardBackImage = null;
+            cardBackScale = 1.0;
+            document.getElementById('cardBackUploadPreview').style.display = 'block';
+            document.getElementById('cardBackImageContainer').style.display = 'none';
+            document.getElementById('cardBackUploadInput').value = '';
+            console.log('Card back cleared - will use default');
+            
+            // Update the button text in card grid if it exists
+            buildCardSection();
+        }
+        
+        // Load overlay image
+        const overlayImg = new Image();
+        overlayImg.onload = function() {
+            overlayImage = overlayImg;
+            console.log('✅ Cut/bleed overlay loaded successfully');
+        };
+        overlayImg.onerror = function() {
+            console.error('❌ Failed to load poker-card_frame-game-crafter.png - make sure file is in same directory as index.html');
+        };
+        overlayImg.src = 'poker-card_frame-game-crafter.png';
+        
+        // Verify overlay button exists
+        setTimeout(() => {
+            const btn = document.getElementById('overlayToggleBtn');
+            if (btn) {
+                console.log('✅ Overlay toggle button found in DOM');
+            } else {
+                console.error('❌ Overlay toggle button NOT FOUND - this is a bug');
+            }
+        }, 1000);
+        
+        // Toggle overlay function
+        function toggleOverlay() {
+            overlayEnabled = !overlayEnabled;
+            console.log('Overlay toggled:', overlayEnabled ? 'ON' : 'OFF');
+            
+            const statusSpan = document.getElementById('overlayStatus');
+            const btn = document.getElementById('overlayToggleBtn');
+            
+            if (overlayEnabled) {
+                statusSpan.textContent = 'ON';
+                btn.classList.remove('bg-gray-600', 'hover:bg-gray-700');
+                btn.classList.add('bg-green-600', 'hover:bg-green-700');
+                console.log('✅ Overlay enabled - should be visible now');
+            } else {
+                statusSpan.textContent = 'OFF';
+                btn.classList.remove('bg-green-600', 'hover:bg-green-700');
+                btn.classList.add('bg-gray-600', 'hover:bg-gray-700');
+                console.log('⭕ Overlay disabled - should be hidden now');
+            }
+            
+            drawOverlay();
+        }
+        
+        // Draw overlay on canvas
+        function drawOverlay() {
+            const overlayCanvas = document.getElementById('overlayCanvas');
+            const previewCanvas = document.getElementById('previewCanvas');
+            
+            if (!overlayCanvas || !previewCanvas) {
+                console.error('Canvas elements not found');
+                return;
+            }
+            
+            if (overlayEnabled && overlayImage) {
+                console.log('Drawing overlay on canvas...');
+                
+                // Get the DISPLAYED size of the preview canvas (not internal resolution)
+                const displayWidth = previewCanvas.offsetWidth;
+                const displayHeight = previewCanvas.offsetHeight;
+                
+                console.log('Preview canvas display size:', displayWidth, 'x', displayHeight);
+                console.log('Preview canvas internal size:', previewCanvas.width, 'x', previewCanvas.height);
+                
+                // Set overlay canvas to match display size
+                overlayCanvas.width = displayWidth;
+                overlayCanvas.height = displayHeight;
+                overlayCanvas.style.width = displayWidth + 'px';
+                overlayCanvas.style.height = displayHeight + 'px';
+                
+                // Draw overlay at the display size
+                const ctx = overlayCanvas.getContext('2d');
+                ctx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+                ctx.drawImage(overlayImage, 0, 0, displayWidth, displayHeight);
+                
+                overlayCanvas.style.display = 'block';
+                console.log('✅ Overlay drawn at display size');
+            } else {
+                overlayCanvas.style.display = 'none';
+                if (!overlayImage) {
+                    console.warn('⚠️ Overlay image not loaded yet');
+                }
+            }
+        }
+
+        function buildSuitSection() {
+            suits.length = 0;
+            for (let i = 0; i < config.suitCount; i++) {
+                suits.push({ name: suitNames[i], icon: null, color: null });
+            }
+
+            const grid = document.getElementById('suitGrid');
+            grid.innerHTML = '';
+
+            if (config.pipSource === 'upload') {
+                document.getElementById('suitTitle').textContent = 'Step 1: Upload Suit Icons';
+                suits.forEach((suit, i) => {
+                    const div = document.createElement('div');
+                    div.className = 'border-2 border-gray-300 rounded p-4';
+                    div.innerHTML = `
+                        <h3 class="font-bold mb-2">${suit.name}</h3>
+                        <input type="file" accept="image/*" onchange="handleUpload(event, ${i})" 
+                               class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 
+                                      file:rounded file:border-0 file:bg-blue-50 file:text-blue-700 
+                                      hover:file:bg-blue-100">
+                        <div id="libPreview${i}" class="mt-2 hidden">
+                            <img id="libImg${i}" class="max-h-32 mx-auto">
+                        </div>
+                    `;
+                    grid.appendChild(div);
+                });
+            } else {
+                document.getElementById('suitTitle').textContent = `Step 1: Select ${config.suitCount} Suit Icons from Gallery`;
+                
+                // Create main container with two columns
+                const mainContainer = document.createElement('div');
+                mainContainer.className = 'flex gap-8';
+                
+                // Left column: Gallery and counter
+                const leftColumn = document.createElement('div');
+                leftColumn.className = 'flex-shrink-0';
+                
+                // Create selection counter
+                const counterDiv = document.createElement('div');
+                counterDiv.className = 'mb-4 p-3 bg-blue-50 border-2 border-blue-200 rounded';
+                counterDiv.id = 'pipCounter';
+                counterDiv.innerHTML = `<p class="font-bold text-blue-800">Selected: <span id="pipCount">0</span> / ${config.suitCount}</p>`;
+                leftColumn.appendChild(counterDiv);
+                
+                // Create pip gallery - use flex with proper spacing to prevent overlap
+                const galleryDiv = document.createElement('div');
+                galleryDiv.className = 'grid grid-cols-3 gap-8 justify-items-start';
+                galleryDiv.id = 'pipGallery';
+                galleryDiv.style.maxWidth = '550px'; // 3 × 150px + 2 × 32px gaps = 532px
+                
+                Object.entries(pipLibrary).forEach(([key, pip]) => {
+                    const pipCard = document.createElement('div');
+                    pipCard.className = 'border-2 border-gray-300 rounded-lg p-2 cursor-pointer hover:border-blue-500 transition-all flex-shrink-0';
+                    pipCard.id = `pip-${key}`;
+                    pipCard.style.width = '150px';
+                    pipCard.style.height = '150px';
+                    pipCard.innerHTML = `
+                        <img src="${pip.url}" class="w-full h-full object-contain">
+                    `;
+                    
+                    pipCard.onclick = function() {
+                        handlePipGallerySelect(key, pip, this);
+                    };
+                    
+                    galleryDiv.appendChild(pipCard);
+                });
+                
+                leftColumn.appendChild(galleryDiv);
+                mainContainer.appendChild(leftColumn);
+                
+                // Right column: Selected pips display
+                const rightColumn = document.createElement('div');
+                rightColumn.className = 'flex-shrink-0';
+                rightColumn.id = 'selectedPipsDisplay';
+                rightColumn.innerHTML = '<h3 class="font-bold mb-3 text-lg">Your Selected Suits:</h3><p class="text-sm text-gray-600 mb-3 italic">Click on selected pip to remove</p><div id="selectedPipsList" class="grid grid-cols-1 gap-4"></div>';
+                mainContainer.appendChild(rightColumn);
+                
+                grid.appendChild(mainContainer);
+            }
+            
+            document.getElementById('suitSection').style.display = 'block';
+        }
+
+        const selectedPipKeys = [];
+        
+        function handlePipGallerySelect(key, pip, element) {
+            console.log('handlePipGallerySelect called:', key, 'Currently selected:', selectedPipKeys);
+            const index = selectedPipKeys.indexOf(key);
+            
+            if (index > -1) {
+                // Already selected - deselect it
+                console.log('Deselecting pip:', key);
+                selectedPipKeys.splice(index, 1);
+                element.classList.remove('border-blue-500', 'bg-blue-50', 'ring-2', 'ring-blue-300');
+                element.classList.add('border-gray-300');
+                
+                // Remove from suits
+                const suitIndex = suits.findIndex(s => s.icon === pip.url);
+                console.log('Found suit index to clear:', suitIndex);
+                if (suitIndex > -1) {
+                    suits[suitIndex].icon = null;
+                    suits[suitIndex].color = null;
+                    console.log('Cleared suit:', suits[suitIndex]);
+                }
+            } else {
+                // Not selected - check if we can select more
+                if (selectedPipKeys.length >= config.suitCount) {
+                    alert(`You can only select ${config.suitCount} suits. Deselect one first.`);
+                    return;
+                }
+                
+                // Select it
+                console.log('Selecting pip:', key);
+                selectedPipKeys.push(key);
+                element.classList.remove('border-gray-300');
+                element.classList.add('border-blue-500', 'bg-blue-50', 'ring-2', 'ring-blue-300');
+                
+                // Add to suits
+                const nextEmpty = suits.findIndex(s => !s.icon);
+                console.log('Adding to suit index:', nextEmpty);
+                if (nextEmpty > -1) {
+                    suits[nextEmpty].icon = pip.url;
+                    
+                    // ALWAYS sample color to avoid white/light color issues
+                    console.log(`Sampling color for ${suits[nextEmpty].name} from:`, pip.url);
+                    sampleColor(pip.url, (color) => {
+                        suits[nextEmpty].color = color;
+                        console.log(`Sampled color for ${suits[nextEmpty].name}:`, color);
+                        updateSelectedPipsDisplay();
+                    });
+                } else {
+                    console.warn('No empty suit slot found!');
+                }
+            }
+            
+            // Update counter
+            document.getElementById('pipCount').textContent = selectedPipKeys.length;
+            console.log('Updated pip count:', selectedPipKeys.length);
+            updateSelectedPipsDisplay();
+        }
+        
+        function updateSelectedPipsDisplay() {
+            const display = document.getElementById('selectedPipsList');
+            if (!display) return;
+            
+            console.log('Updating selected pips display. Current suits:', suits);
+            
+            display.innerHTML = '';
+            suits.forEach((suit, i) => {
+                const div = document.createElement('div');
+                div.className = 'border-2 rounded-lg p-2';
+                div.style.width = '150px';
+                div.style.height = '150px';
+                
+                if (suit.icon) {
+                    div.style.borderColor = suit.color || '#ccc';
+                    div.className += ' cursor-pointer hover:border-red-500 transition-all';
+                    div.innerHTML = `
+                        <img src="${suit.icon}" class="w-full h-full object-contain">
+                    `;
+                    
+                    // Make it clickable to remove
+                    div.onclick = function() {
+                        console.log('Removing pip:', suit.icon);
+                        // Find which pip this is
+                        const pipKey = Object.entries(pipLibrary).find(([key, pip]) => pip.url === suit.icon)?.[0];
+                        if (pipKey) {
+                            console.log('Found pip key:', pipKey);
+                            // Remove from selected list
+                            const index = selectedPipKeys.indexOf(pipKey);
+                            if (index > -1) {
+                                selectedPipKeys.splice(index, 1);
+                                console.log('Removed from selectedPipKeys. Now:', selectedPipKeys);
+                            }
+                            
+                            // Remove blue border from gallery item
+                            const galleryItem = document.getElementById(`pip-${pipKey}`);
+                            if (galleryItem) {
+                                galleryItem.classList.remove('border-blue-500', 'bg-blue-50', 'ring-2', 'ring-blue-300');
+                                galleryItem.classList.add('border-gray-300');
+                                console.log('Updated gallery item border');
+                            }
+                            
+                            // Clear suit
+                            suit.icon = null;
+                            suit.color = null;
+                            console.log('Cleared suit', i);
+                            
+                            // Update counter
+                            document.getElementById('pipCount').textContent = selectedPipKeys.length;
+                            
+                            // Update display
+                            updateSelectedPipsDisplay();
+                        }
+                    };
+                } else {
+                    div.className += ' border-dashed border-gray-300';
+                    div.innerHTML = `<div class="h-full flex items-center justify-center text-gray-400 text-sm">${suit.name}<br>Not selected</div>`;
+                }
+                
+                display.appendChild(div);
+            });
+        }
+
+        function sampleColor(src, callback) {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = function() {
+                try {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                    
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const pixels = imageData.data;
+                    const colors = {};
+                    
+                    for (let i = 0; i < pixels.length; i += 4) {
+                        const r = pixels[i];
+                        const g = pixels[i + 1];
+                        const b = pixels[i + 2];
+                        const alpha = pixels[i + 3];
+                        
+                        // Skip transparent pixels
+                        if (alpha < 128) continue;
+                        
+                        // Skip white and near-white pixels (r,g,b all > 240)
+                        if (r > 240 && g > 240 && b > 240) continue;
+                        
+                        // Skip very light colors
+                        if (r > 200 && g > 200 && b > 200) continue;
+                        
+                        // Round to nearest 16 for grouping
+                        const rBucket = Math.floor(r / 16) * 16;
+                        const gBucket = Math.floor(g / 16) * 16;
+                        const bBucket = Math.floor(b / 16) * 16;
+                        const key = `${rBucket},${gBucket},${bBucket}`;
+                        colors[key] = (colors[key] || 0) + 1;
+                    }
+                    
+                    let max = 0, dominant = null;
+                    for (const k in colors) {
+                        if (colors[k] > max) { 
+                            max = colors[k]; 
+                            dominant = k; 
+                        }
+                    }
+                    
+                    if (!dominant) {
+                        // No color found - default to black
+                        callback('#000000');
+                        return;
+                    }
+                    
+                    let [r, g, b] = dominant.split(',').map(Number);
+                    
+                    // Ensure minimum darkness for readability
+                    const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+                    if (luminance > 150) {
+                        const darkFactor = 0.5;  // Darken by 50%
+                        r = Math.round(r * darkFactor);
+                        g = Math.round(g * darkFactor);
+                        b = Math.round(b * darkFactor);
+                    }
+                    
+                    callback('#' + [r,g,b].map(x => x.toString(16).padStart(2,'0')).join(''));
+                } catch(e) {
+                    console.error('Color sampling error:', e);
+                    callback('#000000');
+                }
+            };
+            img.onerror = () => callback('#000000');
+            img.src = src;
+        }
+
+        function buildCourtLibrary() {
+            const grid = document.getElementById('courtSelectionGrid');
+            grid.innerHTML = '<p class="text-gray-600 mb-4">Loading court cards from server...</p>';
+            
+            // Fetch JSON list from PHP script
+            fetch('https://www.capsaicin.com/courts/index.php')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(filenames => {
+                    console.log('Found court card files:', filenames);
+                    
+                    const courtFiles = filenames.map(filename => {
+                        // Parse filename to determine rank and name
+                        // Format examples: dali-J.png, comic-K.png, cl1-King.png, fant-Q.png
+                        const nameWithoutExt = filename.replace(/\.(png|jpg|jpeg)$/i, '');
+                        const parts = nameWithoutExt.split('-');
+                        
+                        let rank = '';
+                        let styleName = '';
+                        
+                        // Look for rank indicator in filename
+                        if (filename.match(/[-_]J[\.-]/i) || nameWithoutExt.match(/jack/i)) {
+                            rank = 'J';
+                        } else if (filename.match(/[-_]Q[\.-]/i) || nameWithoutExt.match(/queen/i)) {
+                            rank = 'Q';
+                        } else if (filename.match(/[-_]K[\.-]/i) || nameWithoutExt.match(/king/i)) {
+                            rank = 'K';
+                        }
+                        
+                        // Extract style name (everything before the rank)
+                        if (parts.length >= 2) {
+                            // For formats like "dali-J", "comic-K", "cl1-King"
+                            styleName = parts[0];
+                        } else {
+                            styleName = nameWithoutExt;
+                        }
+                        
+                        // Capitalize style name
+                        styleName = styleName.charAt(0).toUpperCase() + styleName.slice(1);
+                        
+                        return {
+                            rank: rank,
+                            file: filename,
+                            name: styleName
+                        };
+                    }).filter(c => c.rank); // Only include files we could parse a rank from
+                    
+                    console.log('Parsed court cards:', courtFiles);
+                    
+                    if (courtFiles.length === 0) {
+                        grid.innerHTML = '<p class="text-red-600">No court card images found in /courts directory. Found files: ' + filenames.join(', ') + '</p>';
+                        return;
+                    }
+                    
+                    // Build the gallery
+                    grid.innerHTML = '';
+                    
+                    ['J', 'Q', 'K'].forEach(rank => {
+                        const rankCourts = courtFiles.filter(c => c.rank === rank);
+                        if (rankCourts.length === 0) return;
+                        
+                        const rankDiv = document.createElement('div');
+                        rankDiv.className = 'mb-6';
+                        rankDiv.innerHTML = `<h3 class="font-bold text-lg mb-3">${rank === 'J' ? 'Jacks' : rank === 'Q' ? 'Queens' : 'Kings'} (${rankCourts.length} available)</h3>`;
+                        
+                        const cardsDiv = document.createElement('div');
+                        cardsDiv.className = 'grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4';
+                        
+                        rankCourts.forEach(court => {
+                            const cardDiv = document.createElement('div');
+                            cardDiv.className = 'border-2 border-gray-300 rounded-lg p-2 cursor-pointer hover:border-blue-500 transition-all';
+                            cardDiv.id = `court-${court.file}`;
+                            cardDiv.innerHTML = `
+                                <img src="https://www.capsaicin.com/courts/${court.file}" class="w-full h-48 object-contain mb-2" onerror="this.parentElement.innerHTML='<div class=\\'h-48 flex items-center justify-center text-red-500 text-xs\\'>Failed to load<br>${court.file}</div>'">
+                                <p class="text-center text-sm font-semibold">${court.name}</p>
+                            `;
+                            
+                            cardDiv.onclick = function() {
+                                // Deselect others of same rank
+                                document.querySelectorAll(`[id^="court-"]`).forEach(el => {
+                                    if (el.id.includes(rank)) {
+                                        el.classList.remove('border-blue-500', 'bg-blue-50');
+                                        el.classList.add('border-gray-300');
+                                    }
+                                });
+                                // Select this one
+                                this.classList.remove('border-gray-300');
+                                this.classList.add('border-blue-500', 'bg-blue-50');
+                                
+                                selectedCourts[rank] = `https://www.capsaicin.com/courts/${court.file}`;
+                                console.log('Selected court for', rank, ':', court.file, '→', selectedCourts[rank]);
+                            };
+                            
+                            cardsDiv.appendChild(cardDiv);
+                        });
+                        
+                        rankDiv.appendChild(cardsDiv);
+                        grid.appendChild(rankDiv);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading court cards:', error);
+                    grid.innerHTML = `
+                        <div class="text-red-600">
+                            <p class="font-bold mb-2">Could not load court cards from server</p>
+                            <p class="text-sm">Error: ${error.message}</p>
+                            <p class="text-sm mt-2 text-gray-600">This is likely a CORS (Cross-Origin) issue. The /courts directory at https://www.capsaicin.com/courts/ needs CORS headers to allow directory listing access.</p>
+                            <p class="text-sm mt-2 text-gray-600"><strong>Workaround:</strong> Use "Upload 3 images" or "Upload individual images" options instead to add your own court cards.</p>
+                        </div>
+                    `;
+                });
+        }
+
+        function handleUpload(event, idx) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = e => {
+                // Auto-crop the uploaded image
+                autoCropImage(e.target.result, (croppedSrc) => {
+                    suits[idx].icon = croppedSrc;
+                    
+                    // Initialize resize setting
+                    if (!imageResizeSettings.pips[idx]) {
+                        imageResizeSettings.pips[idx] = 1.0; // Default 100%
+                    }
+                    
+                    const preview = document.getElementById(`libPreview${idx}`);
+                    if (preview) {
+                        const img = document.getElementById(`libImg${idx}`);
+                        if (img) {
+                            img.src = croppedSrc;
+                            preview.classList.remove('hidden');
+                        }
+                    }
+
+                    // Sample color from cropped image
+                    sampleColor(croppedSrc, (color) => {
+                        suits[idx].color = color;
+                        console.log(`Sampled color for ${suits[idx].name}:`, color);
+                    });
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function updatePipSizeFromPreview(value) {
+            const scale = value / 100;
+            imageResizeSettings.pips[selectedCard.idx] = scale;
+            document.getElementById('previewPipScale').textContent = value;
+            
+            // Redraw the card
+            const canvas = document.getElementById('previewCanvas');
+            drawCard(canvas, selectedCard.rank, suits[selectedCard.idx], selectedCard.idx);
+        }
+        
+        function updateCourtSizeFromPreview(value) {
+            const scale = value / 100;
+            const rank = selectedCard.rank;
+            const suitName = selectedCard.suit;
+            
+            if (config.faceOption === 'library') {
+                imageResizeSettings.courts[rank] = scale;
+            } else if (config.faceOption === 'three') {
+                imageResizeSettings.courts[rank] = scale;
+            } else if (config.faceOption === 'individual') {
+                const key = `${suitName}-${rank}`;
+                imageResizeSettings.individualCourts[key] = scale;
+            }
+            
+            document.getElementById('previewCourtScale').textContent = value;
+            
+            // Redraw the card
+            const canvas = document.getElementById('previewCanvas');
+            drawCard(canvas, selectedCard.rank, suits[selectedCard.idx], selectedCard.idx);
+        }
+        
+        function updateJokerSizeFromPreview(value) {
+            const scale = value / 100;
+            const jokerType = selectedCard.rank; // WILD, SKIP, or JOKER
+            imageResizeSettings.jokers[jokerType] = scale;
+            document.getElementById('previewJokerScale').textContent = value;
+            
+            // Redraw the joker
+            const canvas = document.getElementById('previewCanvas');
+            drawJoker(canvas, jokerType);
+        }
+        
+        function updateCardBackSizeFromPreview(value) {
+            const scale = value / 100;
+            cardBackScale = scale;
+            document.getElementById('previewCardBackScale').textContent = value;
+            
+            // Redraw the card back
+            const canvas = document.getElementById('previewCanvas');
+            drawCardBack(canvas);
+        }
+        
+        function updatePipSize(idx, value) {
+            const scale = value / 100;
+            imageResizeSettings.pips[idx] = scale;
+            document.getElementById(`pipScale${idx}`).textContent = value;
+            console.log(`Pip ${idx} size set to ${value}%`);
+        }
+
+        function buildFaceUpload() {
+            const grid = document.getElementById('faceGrid');
+            grid.innerHTML = '';
+            ['J', 'Q', 'K'].forEach(rank => {
+                const div = document.createElement('div');
+                div.className = 'flex-1 border-2 border-gray-300 rounded p-4';
+                const name = rank === 'J' ? 'Jack' : rank === 'Q' ? 'Queen' : 'King';
+                div.innerHTML = `
+                    <h3 class="font-bold mb-2">${name}</h3>
+                    <input type="file" accept="image/*" onchange="handleFaceUpload(event, '${rank}')" 
+                           class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 
+                                  file:rounded file:border-0 file:bg-blue-50 file:text-blue-700 
+                                  hover:file:bg-blue-100">
+                    <img id="facePreview${rank}" class="mt-2 max-h-32 mx-auto hidden">
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        function buildIndividualFaceUpload() {
+            const grid = document.getElementById('individualFaceGrid');
+            const totalCards = config.suitCount * 3; // 3 ranks (J, Q, K) per suit
+            document.getElementById('individualFaceTitle').textContent = 
+                `Step 2: Upload Individual Face Card Images (${totalCards} total)`;
+            
+            grid.innerHTML = '';
+            
+            // Initialize storage for each suit
+            suits.forEach(suit => {
+                individualFaceImages[suit.name] = { J: null, Q: null, K: null };
+            });
+            
+            // Create upload boxes for each suit and rank
+            suits.forEach(suit => {
+                ['J', 'Q', 'K'].forEach(rank => {
+                    const div = document.createElement('div');
+                    div.className = 'border-2 border-gray-300 rounded p-4';
+                    div.style.borderColor = suit.color || '#ccc';
+                    
+                    const rankName = rank === 'J' ? 'Jack' : rank === 'Q' ? 'Queen' : 'King';
+                    div.innerHTML = `
+                        <h3 class="font-bold mb-2" style="color: ${suit.color || '#000'}">${suit.name} ${rankName}</h3>
+                        <input type="file" accept="image/*" onchange="handleIndividualFaceUpload(event, '${suit.name}', '${rank}')" 
+                               class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 
+                                      file:rounded file:border-0 file:bg-blue-50 file:text-blue-700 
+                                      hover:file:bg-blue-100">
+                        <img id="individualFacePreview${suit.name}${rank}" class="mt-2 max-h-32 mx-auto hidden">
+                    `;
+                    grid.appendChild(div);
+                });
+            });
+        }
+
+        function handleIndividualFaceUpload(event, suitName, rank) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                // Auto-crop the uploaded image
+                autoCropImage(e.target.result, (croppedSrc) => {
+                    if (!individualFaceImages[suitName]) {
+                        individualFaceImages[suitName] = {};
+                    }
+                    individualFaceImages[suitName][rank] = croppedSrc;
+                    
+                    // Initialize resize setting
+                    const key = `${suitName}-${rank}`;
+                    if (!imageResizeSettings.individualCourts[key]) {
+                        imageResizeSettings.individualCourts[key] = 1.0;
+                    }
+                    
+                    const previewId = `individualFacePreview${suitName}${rank}`;
+                    const preview = document.getElementById(previewId);
+                    if (preview) {
+                        preview.src = croppedSrc;
+                        preview.classList.remove('hidden');
+                    }
+                    console.log(`Uploaded ${suitName} ${rank}`);
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function updateIndividualCourtSize(suitName, rank, value) {
+            const scale = value / 100;
+            const key = `${suitName}-${rank}`;
+            imageResizeSettings.individualCourts[key] = scale;
+            document.getElementById(`individualCourtScale${suitName}${rank}`).textContent = value;
+            console.log(`${suitName} ${rank} court size set to ${value}%`);
+        }
+
+        function handleFaceUpload(event, rank) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                // Auto-crop the uploaded image
+                autoCropImage(e.target.result, (croppedSrc) => {
+                    faceImages[rank] = croppedSrc;
+                    
+                    // Initialize resize setting
+                    if (!imageResizeSettings.courts[rank]) {
+                        imageResizeSettings.courts[rank] = 1.0;
+                    }
+                    
+                    const previewId = `facePreview${rank}`;
+                    const preview = document.getElementById(previewId);
+                    preview.src = croppedSrc;
+                    preview.classList.remove('hidden');
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function updateCourtSize(rank, value) {
+            const scale = value / 100;
+            imageResizeSettings.courts[rank] = scale;
+            document.getElementById(`courtScale${rank}`).textContent = value;
+            console.log(`Court ${rank} size set to ${value}%`);
+        }
+
+        function buildCardSection() {
+            const grid = document.getElementById('cardGrid');
+            grid.innerHTML = '';
+            suits.forEach((suit, si) => {
+                const div = document.createElement('div');
+                div.className = 'mb-4';
+                
+                const row = document.createElement('div');
+                row.className = 'flex items-center gap-4';
+                
+                const label = document.createElement('div');
+                label.className = 'font-bold text-lg w-24';
+                label.style.color = suit.color || '#000000';
+                label.textContent = suit.name;
+                row.appendChild(label);
+                
+                const btns = document.createElement('div');
+                btns.className = 'flex gap-2 flex-wrap';
+                ranks.forEach(r => {
+                    const btn = document.createElement('button');
+                    btn.className = 'bg-gray-100 hover:bg-gray-200 border-2 rounded px-3 py-2 font-bold min-w-[3rem]';
+                    btn.style.color = suit.color || '#000000';
+                    btn.textContent = r;
+                    btn.onclick = () => preview(r, si);
+                    btns.appendChild(btn);
+                });
+                row.appendChild(btns);
+                div.appendChild(row);
+                grid.appendChild(div);
+            });
+            
+            // Add Joker row if enabled
+            const hasAnyJokerImage = jokerImage || selectedJokerKey || 
+                (individualJokerImages.WILD || individualJokerImages.SKIP || individualJokerImages.JOKER) ||
+                (selectedLibraryJokers.WILD || selectedLibraryJokers.SKIP || selectedLibraryJokers.JOKER);
+            
+            if (config.jokerCount > 0 && hasAnyJokerImage) {
+                const jokerDiv = document.createElement('div');
+                jokerDiv.className = 'mb-4 border-t-2 border-purple-200 pt-4 mt-4';
+                
+                const row = document.createElement('div');
+                row.className = 'flex items-center gap-4';
+                
+                const label = document.createElement('div');
+                label.className = 'font-bold text-lg w-24 text-purple-600';
+                label.textContent = 'Jokers';
+                row.appendChild(label);
+                
+                const btns = document.createElement('div');
+                btns.className = 'flex gap-2 flex-wrap';
+                
+                if (config.jokerCount === 2) {
+                    const btn = document.createElement('button');
+                    btn.className = 'bg-purple-100 hover:bg-purple-200 border-2 border-purple-300 rounded px-3 py-2 font-bold text-purple-600';
+                    btn.textContent = 'JOKER';
+                    btn.onclick = () => previewJoker('JOKER');
+                    btns.appendChild(btn);
+                } else if (config.jokerCount === 7) {
+                    ['WILD', 'SKIP', 'JOKER'].forEach(type => {
+                        const btn = document.createElement('button');
+                        btn.className = 'bg-purple-100 hover:bg-purple-200 border-2 border-purple-300 rounded px-3 py-2 font-bold text-purple-600';
+                        btn.textContent = type;
+                        btn.onclick = () => previewJoker(type);
+                        btns.appendChild(btn);
+                    });
+                }
+                
+                row.appendChild(btns);
+                jokerDiv.appendChild(row);
+                grid.appendChild(jokerDiv);
+            }
+            
+            // Add Card Back row (always shown for Game Crafter)
+            const cardBackDiv = document.createElement('div');
+            cardBackDiv.className = 'mb-4 border-t-2 border-blue-200 pt-4 mt-4';
+            
+            const backRow = document.createElement('div');
+            backRow.className = 'flex items-center gap-4';
+            
+            const backLabel = document.createElement('div');
+            backLabel.className = 'font-bold text-lg w-24 text-blue-600';
+            backLabel.textContent = 'Card Back';
+            backRow.appendChild(backLabel);
+            
+            const backBtns = document.createElement('div');
+            backBtns.className = 'flex gap-2 flex-wrap';
+            
+            const backBtn = document.createElement('button');
+            backBtn.className = 'bg-blue-100 hover:bg-blue-200 border-2 border-blue-300 rounded px-3 py-2 font-bold text-blue-600';
+            backBtn.textContent = cardBackImage ? 'PREVIEW (Custom)' : 'PREVIEW (Default)';
+            backBtn.onclick = () => previewCardBack();
+            backBtns.appendChild(backBtn);
+            
+            backRow.appendChild(backBtns);
+            cardBackDiv.appendChild(backRow);
+            grid.appendChild(cardBackDiv);
+            
+            // Show card back section (always needed for Game Crafter)
+            document.getElementById('cardBackSection').style.display = 'block';
+            
+            // Setup card back upload handler (do this after section is shown)
+            setupCardBackUpload();
+            
+            document.getElementById('cardSection').style.display = 'block';
+        }
+
+        function drawCard(canvas, rank, suit, suitIdx, onDone) {
+            const ctx = canvas.getContext('2d');
+            
+            // Fixed card dimensions (MPC specs - will be resized for Game Crafter)
+            const w = 2448;
+            const h = 3330;
+            
+            // Margins - Safe mode adds extra inset on all sides
+            const ms = config.margins === 'safe' ? 220 : 170;  // Side margin (+50px for safe)
+            const mt = config.margins === 'safe' ? 290 : 240;  // Top/bottom margin (+50px for safe)
+            
+            // Content scale - keep at 1.0 for both modes now (using margin offset instead)
+            const contentScale = 1.0;
+            
+            canvas.width = w;
+            canvas.height = h;
+            
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, w, h);
+            
+            console.log(`Drawing ${rank}, margins: ${config.margins}, ms: ${ms}, mt: ${mt}`);
+            
+            // Store index/pip drawing info for later (draw on top at the end)
+            const drawIndexesAndPips = () => {
+                ctx.fillStyle = suit.color || 'black';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                
+                let fontSize = Math.round(375 * contentScale);
+                let indexShift = Math.round(10 * contentScale);
+                
+                if (rank === '10') {
+                    fontSize = Math.round(340 * contentScale);
+                    indexShift = Math.round(35 * contentScale);
+                }
+                
+                ctx.font = `bold ${fontSize}px serif`;
+                
+                // Use outer scope ms/mt values that were already calculated
+                // Index positions (shifted)
+                const tix = Math.round(165 * contentScale) + ms - indexShift;
+                const tiy = Math.round(165 * contentScale) + mt;
+                const bix = w - Math.round(165 * contentScale) - ms + indexShift;
+                const biy = h - Math.round(165 * contentScale) - mt;
+                
+                // Pip positions (NOT shifted - stay centered)
+                const pipX = Math.round(165 * contentScale) + ms;
+                const pipY = Math.round(165 * contentScale) + mt;
+                const pipBotX = w - Math.round(165 * contentScale) - ms;
+                const pipBotY = h - Math.round(165 * contentScale) - mt;
+                
+                // Draw top-left index
+                if (rank === '10') {
+                    ctx.save();
+                    ctx.letterSpacing = Math.round(-50 * contentScale) + 'px';
+                    ctx.fillText(rank, tix, tiy);
+                    ctx.restore();
+                } else {
+                    ctx.fillText(rank, tix, tiy);
+                }
+                
+                // Draw bottom-right index (uses bix/biy already defined above)
+                ctx.save();
+                ctx.translate(bix, biy);
+                ctx.rotate(Math.PI);
+                if (rank === '10') {
+                    ctx.font = `bold ${fontSize}px serif`;
+                    ctx.letterSpacing = Math.round(-50 * contentScale) + 'px';
+                }
+                ctx.fillText(rank, 0, 0);
+                ctx.restore();
+                
+                // Draw corner pips if we have suit icon (use pip positions, NOT index positions)
+                if (pipImageData) {
+                    const ps = Math.round(300 * contentScale * pipResizeScale);
+                    const sp = rank === 'Q' ? Math.round(320 * contentScale) : Math.round(270 * contentScale);
+                    const spAdjusted = sp + Math.round(15 * contentScale);
+                    
+                    // Top-left pip (using pipX, not tix)
+                    ctx.drawImage(pipImageData, pipX - ps/2, pipY + spAdjusted - ps/2, ps, ps);
+                    
+                    // Bottom-right pip (using pipBotX, not bix)
+                    ctx.save();
+                    ctx.translate(pipBotX, pipBotY - spAdjusted);
+                    ctx.rotate(Math.PI);
+                    ctx.drawImage(pipImageData, -ps/2, -ps/2, ps, ps);
+                    ctx.restore();
+                }
+            };
+            
+            // Track loaded images
+            let pipImageData = null;
+            let pipResizeScale = 1.0;
+
+            let loaded = 0;
+            const needFace = ['J','Q','K'].includes(rank) && 
+                ((config.faceOption === 'library' && selectedCourts[rank]) || 
+                 (config.faceOption === 'three' && faceImages[rank]) ||
+                 (config.faceOption === 'individual' && individualFaceImages[suit.name] && individualFaceImages[suit.name][rank]));
+            const total = (suit.icon ? 1 : 0) + (needFace ? 1 : 0);
+            
+            const check = () => {
+                loaded++;
+                console.log(`Loaded ${loaded}/${total} for ${rank}`);
+                if (loaded >= total) {
+                    // Draw white safe zone boxes behind indexes and corner pips
+                    // This keeps them visible when courts are resized large
+                    const drawSafeZones = () => {
+                        ctx.fillStyle = 'white';
+                        
+                        let indexShift = Math.round(10 * contentScale);
+                        const fontSize = rank === '10' ? Math.round(340 * contentScale) : Math.round(375 * contentScale);
+                        
+                        if (rank === '10') {
+                            indexShift = Math.round(35 * contentScale);
+                        }
+                        
+                        const tix = Math.round(165 * contentScale) + ms - indexShift;
+                        const tiy = Math.round(165 * contentScale) + mt;
+                        const bix = w - Math.round(165 * contentScale) - ms + indexShift;
+                        const biy = h - Math.round(165 * contentScale) - mt;
+                        
+                        // Pip positions (NOT shifted)
+                        const pipX = Math.round(165 * contentScale) + ms;
+                        const pipY = Math.round(165 * contentScale) + mt;
+                        
+                        const pipSize = pipResizeScale ? Math.round(300 * contentScale * pipResizeScale) : Math.round(300 * contentScale);
+                        const pipSpacing = rank === 'Q' ? Math.round(320 * contentScale) : Math.round(270 * contentScale);
+                        const pipSpacingAdjusted = pipSpacing + Math.round(15 * contentScale);
+                        
+                        const boxWidth = Math.max(fontSize * 0.7, pipSize) + Math.round(30 * contentScale);
+                        const indexToTopOfPip = pipSpacingAdjusted - pipSize/2;
+                        const boxHeight = fontSize + indexToTopOfPip + pipSize - Math.round(5 * contentScale);
+                        
+                        // Top-left: starts above index, extends to just below pip
+                        ctx.fillRect(
+                            tix - boxWidth / 2,
+                            tiy - fontSize/2 - Math.round(15 * contentScale),
+                            boxWidth,
+                            boxHeight
+                        );
+                        
+                        // Bottom-right: mirror positioning
+                        ctx.fillRect(
+                            bix - boxWidth / 2,
+                            biy + fontSize/2 + Math.round(15 * contentScale) - boxHeight,
+                            boxWidth,
+                            boxHeight
+                        );
+                    };
+                    
+                    // Draw safe zones if this is a face card (J/Q/K)
+                    if (needFace) {
+                        drawSafeZones();
+                    }
+                    
+                    // Draw indexes and corner pips ON TOP
+                    drawIndexesAndPips();
+                    if (onDone) onDone();
+                }
+            };
+
+            if (suit.icon) {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => {
+                    // Store pip image and scale for later drawing corner pips
+                    pipImageData = img;
+                    pipResizeScale = imageResizeSettings.pips[suitIdx] || 1.0;
+                    
+                    // Calculate positions (needed for body pips)
+                    let indexPipShift = Math.round(25 * contentScale);
+                    if (['J', 'Q', 'K'].includes(rank)) {
+                        indexPipShift = Math.round(30 * contentScale);
+                    } else if (rank === '10') {
+                        indexPipShift = Math.round(45 * contentScale);
+                    }
+                    
+                    // Draw BODY pips now (Ace center and 2-10 patterns)
+                    // These go behind courts
+                    if (rank === 'A') {
+                        const aceSize = Math.round(1500 * contentScale * pipResizeScale);
+                        ctx.drawImage(img, (w-aceSize)/2 - indexPipShift, (h-aceSize)/2, aceSize, aceSize);
+                    } else if (pipPositions[rank]) {
+                        const pips = pipPositions[rank];
+                        const bps = Math.round(420 * contentScale * pipResizeScale);
+                        // Compression factor for body pips (no contentScale multiplication now)
+                        const cf = 0.9, cx = w/2, cy = h/2;
+                        console.log(`Body pips for ${rank}: cf=${cf.toFixed(3)}, margins: ${config.margins}`);
+                        pips.forEach(([x, y]) => {
+                            const px = cx + (x*w - cx)*cf - indexPipShift;
+                            const py = cy + (y*h - cy)*cf;
+                            if (y > 0.55) {
+                                ctx.save();
+                                ctx.translate(px, py);
+                                ctx.rotate(Math.PI);
+                                ctx.drawImage(img, -bps/2, -bps/2, bps, bps);
+                                ctx.restore();
+                            } else {
+                                ctx.drawImage(img, px-bps/2, py-bps/2, bps, bps);
+                            }
+                        });
+                    }
+                    
+                    // Corner pips will be drawn later by drawIndexesAndPips()
+                    check();
+                };
+                img.onerror = (e) => {
+                    console.error('Failed to load suit icon:', e);
+                    check();
+                };
+                img.src = suit.icon;
+            }
+            
+            if (needFace) {
+                console.log(`Loading face card for ${rank}, option: ${config.faceOption}`);
+                const faceImg = new Image();
+                faceImg.crossOrigin = 'anonymous';
+                faceImg.onload = () => {
+                    // Get source filename for logging
+                    let sourceUrl = null;
+                    if (config.faceOption === 'library') {
+                        sourceUrl = selectedCourts[rank];
+                    } else if (config.faceOption === 'individual') {
+                        sourceUrl = individualFaceImages[suit.name] ? individualFaceImages[suit.name][rank] : null;
+                    } else {
+                        sourceUrl = faceImages[rank];
+                    }
+                    
+                    const sourceFilename = sourceUrl ? (sourceUrl.includes('/') ? sourceUrl.split('/').pop() : 'uploaded-image') : 'no-source';
+                    console.log(`=== ${rank} Court Card: ${sourceFilename} ===`);
+                    console.log(`Source image size: ${faceImg.width}×${faceImg.height}`);
+                    
+                    const imgAspect = faceImg.width / faceImg.height;
+                    console.log(`Aspect ratio: ${imgAspect.toFixed(3)} (width/height)`);
+                    
+                    // Safe zone - pip edges (scaled with contentScale)
+                    const safeLeft = Math.round(485 * contentScale);
+                    const safeRight = Math.round(1963 * contentScale);
+                    const safeTop = Math.round(875 * contentScale);
+                    const safeBottom = Math.round(2455 * contentScale);
+                    
+                    const maxWidth = safeRight - safeLeft;
+                    const maxHeight = safeBottom - safeTop;
+                    
+                    // Get resize scale based on option
+                    let resizeScale = 1.0;
+                    if (config.faceOption === 'library' && imageResizeSettings.courts[rank]) {
+                        resizeScale = imageResizeSettings.courts[rank];
+                        console.log(`Using library resize scale for ${rank}: ${resizeScale}`);
+                    } else if (config.faceOption === 'three' && imageResizeSettings.courts[rank]) {
+                        resizeScale = imageResizeSettings.courts[rank];
+                        console.log(`Using three-image resize scale for ${rank}: ${resizeScale}`);
+                    } else if (config.faceOption === 'individual') {
+                        const key = `${suit.name}-${rank}`;
+                        resizeScale = imageResizeSettings.individualCourts[key] || 1.0;
+                        console.log(`Using individual resize scale for ${suit.name}-${rank}: ${resizeScale}`);
+                    }
+                    
+                    // ALWAYS SET WIDTH TO 1500px - this is the critical measurement (scaled)
+                    const TARGET_WIDTH = 1500 * resizeScale * contentScale;  // Apply both resize and content scale
+                    const CARD_HEIGHT = 3100 * contentScale;  // Full card height limit (scaled)
+                    
+                    // Width is ALWAYS 1500px (scaled)
+                    let courtWidth = TARGET_WIDTH;
+                    // Height is calculated from aspect ratio
+                    let courtHeight = TARGET_WIDTH / imgAspect;
+                    
+                    console.log(`Initial calculation: ${courtWidth.toFixed(0)}×${courtHeight.toFixed(0)} (scale: ${(resizeScale * 100).toFixed(0)}%)`);
+                    
+                    // Only if height would exceed the physical card, scale DOWN proportionally
+                    if (courtHeight > CARD_HEIGHT) {
+                        const scale = CARD_HEIGHT / courtHeight;
+                        courtHeight = CARD_HEIGHT;
+                        courtWidth = TARGET_WIDTH * scale;
+                        console.log(`!!! Height exceeded card limit (${CARD_HEIGHT}), scaled down by ${scale.toFixed(3)}`);
+                        console.log(`After scaling: ${courtWidth.toFixed(0)}×${courtHeight}`);
+                    }
+                    
+                    console.log(`Final dimensions: ${courtWidth.toFixed(0)}×${courtHeight.toFixed(0)}`);
+                    console.log(`Target width: ${TARGET_WIDTH.toFixed(0)}, Card height limit: ${CARD_HEIGHT}`);
+                    
+                    // Center within safe area
+                    const courtLeft = safeLeft + (maxWidth - courtWidth) / 2;
+                    const courtTop = safeTop + (maxHeight - courtHeight) / 2;
+                    
+                    console.log(`Position: (${courtLeft.toFixed(0)}, ${courtTop.toFixed(0)})`);
+                    console.log(`Drawing to canvas at: ${courtLeft.toFixed(0)},${courtTop.toFixed(0)} with size ${courtWidth.toFixed(0)}×${courtHeight.toFixed(0)}`);
+                    console.log(`===================`);
+                    
+                    ctx.drawImage(faceImg, courtLeft, courtTop, courtWidth, courtHeight);
+                    check();
+                };
+                faceImg.onerror = (e) => {
+                    console.error('Failed to load face card for', rank, ':', e);
+                    console.error('Attempted URL:', faceImg.src);
+                    check();
+                };
+                
+                if (config.faceOption === 'library') {
+                    faceImg.src = selectedCourts[rank];
+                } else if (config.faceOption === 'individual') {
+                    faceImg.src = individualFaceImages[suit.name][rank];
+                } else {
+                    faceImg.src = faceImages[rank];
+                }
+            }
+            
+            if (total === 0 && onDone) onDone();
+        }
+
+        function preview(rank, idx) {
+            if (!suits[idx].icon) {
+                alert('Please select/upload icon for ' + suits[idx].name);
+                return;
+            }
+            
+            const canvas = document.getElementById('previewCanvas');
+            drawCard(canvas, rank, suits[idx], idx, () => {
+                selectedCard = { rank, suit: suits[idx].name, idx };
+                document.getElementById('previewTitle').textContent = `${rank} of ${suits[idx].name}`;
+                document.getElementById('previewSection').style.display = 'block';
+                
+                // Show resize controls if image is uploaded
+                const showPipResize = config.pipSource === 'upload';
+                const showCourtResize = ['J', 'Q', 'K'].includes(rank) && 
+                    (config.faceOption === 'library' || config.faceOption === 'three' || config.faceOption === 'individual');
+                
+                // Show/hide resize sections
+                document.getElementById('previewResizeControls').style.display = 
+                    (showPipResize || showCourtResize) ? 'block' : 'none';
+                document.getElementById('previewPipResize').style.display = 
+                    showPipResize ? 'block' : 'none';
+                document.getElementById('previewCourtResize').style.display = 
+                    showCourtResize ? 'block' : 'none';
+                document.getElementById('previewJokerResize').style.display = 'none'; // Hide joker resize for regular cards
+                document.getElementById('previewCardBackResize').style.display = 'none'; // Hide card back resize for regular cards
+                
+                // Initialize pip slider
+                if (showPipResize) {
+                    const pipScale = (imageResizeSettings.pips[idx] || 1.0) * 100;
+                    document.getElementById('previewPipSlider').value = pipScale;
+                    document.getElementById('previewPipScale').textContent = Math.round(pipScale);
+                }
+                
+                // Initialize court slider
+                if (showCourtResize) {
+                    let courtScale = 1.0;
+                    if (config.faceOption === 'library' && imageResizeSettings.courts[rank]) {
+                        courtScale = imageResizeSettings.courts[rank];
+                    } else if (config.faceOption === 'three' && imageResizeSettings.courts[rank]) {
+                        courtScale = imageResizeSettings.courts[rank];
+                    } else if (config.faceOption === 'individual') {
+                        const key = `${suits[idx].name}-${rank}`;
+                        courtScale = imageResizeSettings.individualCourts[key] || 1.0;
+                    }
+                    const scalePercent = courtScale * 100;
+                    document.getElementById('previewCourtSlider').value = scalePercent;
+                    document.getElementById('previewCourtScale').textContent = Math.round(scalePercent);
+                }
+                
+                // Draw overlay if enabled
+                drawOverlay();
+            });
+        }
+
+        // Joker functions
+        function drawJoker(canvas, jokerType, onDone) {
+            const ctx = canvas.getContext('2d');
+            const w = 2448, h = 3330;
+            
+            canvas.width = w;
+            canvas.height = h;
+            
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, w, h);
+            
+            // Determine which image to use
+            let jokerSrc = null;
+            if (config.jokerSource === 'library') {
+                jokerSrc = `https://www.capsaicin.com/jokers/${selectedJokerKey}`;
+            } else if (config.jokerSource === 'library-individual') {
+                jokerSrc = selectedLibraryJokers[jokerType] ? 
+                    `https://www.capsaicin.com/jokers/${selectedLibraryJokers[jokerType]}` : null;
+            } else if (config.jokerSource === 'individual') {
+                jokerSrc = individualJokerImages[jokerType];
+            } else {
+                jokerSrc = jokerImage;
+            }
+            
+            if (!jokerSrc) {
+                if (onDone) onDone();
+                return;
+            }
+            
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => {
+                // Use EXACT same safe zone as court cards
+                const safeLeft = 485;
+                const safeRight = 1963;
+                const safeTop = 875;
+                const safeBottom = 2455;
+                
+                const maxWidth = safeRight - safeLeft;   // 1478px
+                const maxHeight = safeBottom - safeTop;  // 1580px
+                
+                // Get resize scale for this specific joker type
+                const resizeScale = imageResizeSettings.jokers[jokerType] || 1.0;
+                
+                // Same logic as court cards
+                const imgAspect = img.width / img.height;
+                const TARGET_WIDTH = 1500 * resizeScale;
+                const CARD_HEIGHT = 3100;
+                
+                let jokerWidth = TARGET_WIDTH;
+                let jokerHeight = TARGET_WIDTH / imgAspect;
+                
+                if (jokerHeight > CARD_HEIGHT) {
+                    const scale = CARD_HEIGHT / jokerHeight;
+                    jokerHeight = CARD_HEIGHT;
+                    jokerWidth = TARGET_WIDTH * scale;
+                }
+                
+                // Center within safe area (same as courts)
+                const jokerLeft = safeLeft + (maxWidth - jokerWidth) / 2;
+                const jokerTop = safeTop + (maxHeight - jokerHeight) / 2;
+                
+                ctx.drawImage(img, jokerLeft, jokerTop, jokerWidth, jokerHeight);
+                
+                // Now draw index-style text in corners
+                const ms = config.margins === 'safe' ? 220 : 170;  // +50px for safe
+                const mt = config.margins === 'safe' ? 290 : 240;  // +50px for safe
+                const indexPipShift = -3;
+                const tix = 165 + ms - indexPipShift + 20; // +20px inward from left
+                const tiy = 165 + mt;
+                const bix = w - 165 - ms + indexPipShift - 20; // -20px inward from right
+                const biy = h - 165 - mt;
+                
+                // White safe zone boxes (same as courts)
+                ctx.fillStyle = 'white';
+                const fontSize = 200;
+                const pipSize = 0; // No pip for jokers, but need space for text
+                const textHeight = jokerType.length * 180; // Letter spacing
+                
+                const boxWidth = 250;
+                const boxHeight = textHeight + 100;
+                
+                // Top-left white box
+                ctx.fillRect(
+                    tix - boxWidth / 2,
+                    tiy - fontSize/2 - 15,
+                    boxWidth,
+                    boxHeight
+                );
+                
+                // Bottom-right white box
+                ctx.fillRect(
+                    bix - boxWidth / 2,
+                    biy + fontSize/2 + 15 - boxHeight,
+                    boxWidth,
+                    boxHeight
+                );
+                
+                // Text - BLACK with SERIF font (matching regular card indexes)
+                ctx.fillStyle = '#000000';
+                ctx.font = 'bold 180px serif'; // Changed to serif to match card indexes
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+                
+                // Write letters vertically down the left side
+                const letters = jokerType.split('');
+                const letterSpacing = 180;
+                
+                letters.forEach((letter, i) => {
+                    ctx.fillText(letter, tix, tiy + (i * letterSpacing) - 90);
+                });
+                
+                // Text on right side - upside down
+                ctx.save();
+                ctx.translate(bix, biy);
+                ctx.rotate(Math.PI);
+                
+                letters.forEach((letter, i) => {
+                    ctx.fillText(letter, 0, (i * letterSpacing) - 90);
+                });
+                ctx.restore();
+                
+                if (onDone) onDone();
+            };
+            
+            img.onerror = () => {
+                console.error('Failed to load joker image');
+                if (onDone) onDone();
+            };
+            
+            img.src = jokerSrc;
+        }
+
+        function previewJoker(type) {
+            const canvas = document.getElementById('previewCanvas');
+            drawJoker(canvas, type, () => {
+                selectedCard = { rank: type, suit: 'Joker', isJoker: true };
+                document.getElementById('previewTitle').textContent = `${type} Card`;
+                document.getElementById('previewSection').style.display = 'block';
+                
+                // Show resize controls for jokers
+                document.getElementById('previewResizeControls').style.display = 'block';
+                document.getElementById('previewPipResize').style.display = 'none';
+                document.getElementById('previewCourtResize').style.display = 'none';
+                document.getElementById('previewJokerResize').style.display = 'block';
+                document.getElementById('previewCardBackResize').style.display = 'none';
+                
+                // Set current value for this specific joker type
+                const currentScale = imageResizeSettings.jokers[type] || 1.0;
+                const slider = document.getElementById('previewJokerSlider');
+                slider.value = Math.round(currentScale * 100);
+                document.getElementById('previewJokerScale').textContent = slider.value;
+                
+                // Draw overlay if enabled
+                drawOverlay();
+            });
+        }
+        
+        function previewCardBack() {
+            const canvas = document.getElementById('previewCanvas');
+            drawCardBack(canvas, () => {
+                selectedCard = { rank: 'BACK', suit: 'Card Back', isCardBack: true };
+                document.getElementById('previewTitle').textContent = 'Card Back';
+                document.getElementById('previewSection').style.display = 'block';
+                
+                // Show resize controls for card back (only if custom image uploaded)
+                if (cardBackImage) {
+                    document.getElementById('previewResizeControls').style.display = 'block';
+                    document.getElementById('previewPipResize').style.display = 'none';
+                    document.getElementById('previewCourtResize').style.display = 'none';
+                    document.getElementById('previewJokerResize').style.display = 'none';
+                    document.getElementById('previewCardBackResize').style.display = 'block';
+                    
+                    // Set current value
+                    const slider = document.getElementById('previewCardBackSlider');
+                    slider.value = Math.round(cardBackScale * 100);
+                    document.getElementById('previewCardBackScale').textContent = slider.value;
+                } else {
+                    // No resize for default gradient
+                    document.getElementById('previewResizeControls').style.display = 'none';
+                }
+                
+                // Draw overlay if enabled
+                drawOverlay();
+            });
+        }
+        
+        function drawCardBack(canvas, onDone) {
+            const ctx = canvas.getContext('2d');
+            const w = 2448;
+            const h = 3330;
+            
+            canvas.width = w;
+            canvas.height = h;
+            
+            if (cardBackImage) {
+                // Custom card back
+                const img = new Image();
+                img.onload = () => {
+                    // Fill with white background first
+                    ctx.fillStyle = 'white';
+                    ctx.fillRect(0, 0, w, h);
+                    
+                    // Scale to Game Crafter size first (825×1125), then scale up to preview size
+                    const gcW = 825;
+                    const gcH = 1125;
+                    const scaleFactor = w / gcW; // 2448 / 825 = ~2.96
+                    
+                    // Calculate scaled dimensions (apply cardBackScale to Game Crafter dimensions)
+                    const scaledGcW = gcW * cardBackScale;
+                    const scaledGcH = gcH * cardBackScale;
+                    
+                    // Scale up to preview size
+                    const scaledW = scaledGcW * scaleFactor;
+                    const scaledH = scaledGcH * scaleFactor;
+                    
+                    // Center the image
+                    const x = (w - scaledW) / 2;
+                    const y = (h - scaledH) / 2;
+                    
+                    // Draw the scaled card back
+                    ctx.drawImage(img, x, y, scaledW, scaledH);
+                    
+                    if (onDone) onDone();
+                };
+                img.src = cardBackImage;
+            } else {
+                // Default blue gradient
+                const gradient = ctx.createLinearGradient(0, 0, 0, h);
+                gradient.addColorStop(0, '#1e3a8a');
+                gradient.addColorStop(1, '#3b82f6');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, w, h);
+                
+                // White border
+                ctx.strokeStyle = 'white';
+                ctx.lineWidth = 60;
+                ctx.strokeRect(120, 120, w - 240, h - 240);
+                
+                if (onDone) onDone();
+            }
+        }
+
+        async function loadJokerLibrary() {
+            try {
+                const response = await fetch('https://www.capsaicin.com/jokers/index.php');
+                const files = await response.json();
+                
+                jokerLibraryList = files.map(file => ({
+                    name: file.replace(/\.(png|jpg|jpeg|gif)$/i, ''),
+                    file: file,
+                    url: `https://www.capsaicin.com/jokers/${file}`
+                }));
+                
+                buildJokerGallery();
+            } catch (error) {
+                console.error('Failed to load joker library:', error);
+                document.getElementById('jokerGallery').innerHTML = 
+                    '<p class="text-red-500 text-center p-4">Could not load joker library</p>';
+            }
+        }
+
+        function buildJokerGallery() {
+            const gallery = document.getElementById('jokerGallery');
+            gallery.innerHTML = '';
+            
+            if (jokerLibraryList.length === 0) {
+                gallery.innerHTML = '<p class="text-gray-500 text-center p-4">No jokers in library</p>';
+                return;
+            }
+            
+            jokerLibraryList.forEach(joker => {
+                const div = document.createElement('div');
+                div.className = 'border-2 rounded-lg p-2 cursor-pointer hover:border-purple-500';
+                div.id = `joker-${joker.file}`;
+                div.innerHTML = `
+                    <img src="${joker.url}" class="w-full h-48 object-contain mb-2">
+                    <p class="text-center text-sm font-semibold">${joker.name}</p>
+                `;
+                
+                div.onclick = function() {
+                    document.querySelectorAll('[id^="joker-"]').forEach(el => {
+                        el.classList.remove('border-purple-500', 'bg-purple-50');
+                    });
+                    
+                    this.classList.add('border-purple-500', 'bg-purple-50');
+                    selectedJokerKey = joker.file;
+                    console.log('Selected joker:', joker.file);
+                    buildCardSection();
+                };
+                
+                gallery.appendChild(div);
+            });
+        }
+
+        function buildIndividualJokerLibraryGalleries() {
+            ['WILD', 'SKIP', 'JOKER'].forEach(type => {
+                const galleryId = `${type.toLowerCase()}LibraryGallery`;
+                const gallery = document.getElementById(galleryId);
+                gallery.innerHTML = '';
+                
+                if (jokerLibraryList.length === 0) {
+                    gallery.innerHTML = '<p class="text-gray-500 text-center p-4">No jokers in library</p>';
+                    return;
+                }
+                
+                jokerLibraryList.forEach(joker => {
+                    const div = document.createElement('div');
+                    div.className = 'border-2 rounded-lg p-2 cursor-pointer hover:border-purple-500';
+                    div.id = `${type}-lib-${joker.file}`;
+                    div.innerHTML = `
+                        <img src="${joker.url}" class="w-full h-48 object-contain mb-2" crossorigin="anonymous">
+                        <p class="text-center text-sm font-semibold">${joker.name}</p>
+                    `;
+                    
+                    div.onclick = function() {
+                        // Deselect others in this gallery
+                        document.querySelectorAll(`[id^="${type}-lib-"]`).forEach(el => {
+                            el.classList.remove('border-purple-500', 'bg-purple-50');
+                        });
+                        
+                        this.classList.add('border-purple-500', 'bg-purple-50');
+                        selectedLibraryJokers[type] = joker.file;
+                        console.log(`Selected ${type} joker:`, joker.file);
+                        buildCardSection();
+                    };
+                    
+                    gallery.appendChild(div);
+                });
+            });
+        }
+
+        function downloadOne() {
+            const canvas = document.getElementById('previewCanvas');
+            setTimeout(() => {
+                canvas.toBlob(blob => {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.download = `${selectedCard.rank}_${selectedCard.suit}.png`;
+                    a.href = url;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                }, 'image/png');
+            }, 500);
+        }
+
+        async function downloadAll() {
+            const missing = suits.filter(s => !s.icon).map(s => s.name);
+            if (missing.length) {
+                alert('Please select/upload icons for: ' + missing.join(', '));
+                return;
+            }
+
+            const zip = new JSZip();
+            const canvas = document.getElementById('hiddenCanvas');
+
+            for (let si = 0; si < suits.length; si++) {
+                for (let ri = 0; ri < ranks.length; ri++) {
+                    await new Promise(resolve => {
+                        drawCard(canvas, ranks[ri], suits[si], si, () => {
+                            canvas.toBlob(blob => {
+                                zip.file(`${ranks[ri]}_${suits[si].name}.png`, blob);
+                                resolve();
+                            }, 'image/png');
+                        });
+                    });
+                }
+            }
+
+            // Generate joker cards
+            const hasJokerImages = jokerImage || selectedJokerKey || 
+                (config.jokerSource === 'individual' && (individualJokerImages.WILD || individualJokerImages.SKIP || individualJokerImages.JOKER)) ||
+                (config.jokerSource === 'library-individual' && (selectedLibraryJokers.WILD || selectedLibraryJokers.SKIP || selectedLibraryJokers.JOKER));
+            
+            if (config.jokerCount > 0 && hasJokerImages) {
+                if (config.jokerCount === 2) {
+                    for (let i = 1; i <= 2; i++) {
+                        await new Promise(resolve => {
+                            drawJoker(canvas, 'JOKER', () => {
+                                canvas.toBlob(blob => {
+                                    zip.file(`Joker_${i}.png`, blob);
+                                    resolve();
+                                }, 'image/png');
+                            });
+                        });
+                    }
+                } else if (config.jokerCount === 7) {
+                    const jokerTypes = [
+                        { type: 'WILD', count: 4 },
+                        { type: 'SKIP', count: 2 },
+                        { type: 'JOKER', count: 1 }
+                    ];
+                    
+                    for (const {type, count} of jokerTypes) {
+                        for (let i = 1; i <= count; i++) {
+                            await new Promise(resolve => {
+                                drawJoker(canvas, type, () => {
+                                    canvas.toBlob(blob => {
+                                        zip.file(`${type}_${i}.png`, blob);
+                                        resolve();
+                                    }, 'image/png');
+                                });
+                            });
+                        }
+                    }
+                }
+            }
+
+            const content = await zip.generateAsync({ type: 'blob' });
+            const url = URL.createObjectURL(content);
+            const a = document.createElement('a');
+            a.download = 'playing_cards.zip';
+            a.href = url;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            const totalCards = (suits.length * ranks.length) + config.jokerCount;
+            alert(`Successfully created ZIP with ${totalCards} cards!`);
+        }
+
+        // Card Gallery Lightbox Functions
+        function showCardImage(imageUrl, caption) {
+            document.getElementById('lightboxImage').src = imageUrl;
+            document.getElementById('lightboxCaption').textContent = caption;
+            const lightbox = document.getElementById('cardLightbox');
+            lightbox.style.display = 'flex';
+            lightbox.classList.remove('hidden');
+        }
+        
+        function closeCardImage() {
+            const lightbox = document.getElementById('cardLightbox');
+            lightbox.style.display = 'none';
+            lightbox.classList.add('hidden');
+        }
+        
+        // Close lightbox on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeCardImage();
+            }
+        });
+
+        // Initialize suit change listener to update joker options immediately
+        document.addEventListener('DOMContentLoaded', function() {
+            const updateJokerOptions = () => {
+                const suitCount = parseInt(document.querySelector('input[name="suits"]:checked').value);
+                const jokerDiv = document.getElementById('jokerOptions');
+                const jokerSourceDiv = document.getElementById('jokerSourceDiv');
+                const currentJokerValue = config.jokerCount || 0;
+                
+                if (suitCount === 4) {
+                    jokerDiv.innerHTML = `
+                        <label class="block"><input type="radio" name="jokers" value="0" ${currentJokerValue === 0 ? 'checked' : ''} class="mr-2">No jokers (52 cards)</label>
+                        <label class="block"><input type="radio" name="jokers" value="2" ${currentJokerValue === 2 ? 'checked' : ''} class="mr-2">2 Jokers (54 cards) - Standard deck</label>
+                    `;
+                } else {
+                    jokerDiv.innerHTML = `
+                        <label class="block"><input type="radio" name="jokers" value="0" ${currentJokerValue === 0 ? 'checked' : ''} class="mr-2">No jokers (65 cards)</label>
+                        <label class="block">
+                            <input type="radio" name="jokers" value="7" ${currentJokerValue === 7 ? 'checked' : ''} class="mr-2">7 Jokers (72 cards) - Game deck
+                            <div class="ml-6 mt-1 text-sm text-gray-600">
+                                <p>✓ 4 cards: "WILD" (Phase 10, Five Crowns)</p>
+                                <p>✓ 2 cards: "SKIP" (Phase 10, Skip-Bo)</p>
+                                <p>✓ 1 card: "JOKER" (Ultimate Wild)</p>
+                            </div>
+                        </label>
+                    `;
+                }
+                
+                // Add event listeners to newly created joker radio buttons
+                document.querySelectorAll('input[name="jokers"]').forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        config.jokerCount = parseInt(this.value);
+                        
+                        // Show/hide joker source options immediately
+                        if (config.jokerCount > 0) {
+                            jokerSourceDiv.style.display = 'block';
+                            
+                            // Show/hide individual options based on joker count
+                            const is7Jokers = config.jokerCount === 7;
+                            const individualOption = document.getElementById('jokerIndividualOption');
+                            const libraryIndividualOption = document.getElementById('jokerLibraryIndividualOption');
+                            
+                            if (individualOption) {
+                                individualOption.style.display = is7Jokers ? 'block' : 'none';
+                            }
+                            if (libraryIndividualOption) {
+                                libraryIndividualOption.style.display = is7Jokers ? 'block' : 'none';
+                            }
+                        } else {
+                            jokerSourceDiv.style.display = 'none';
+                        }
+                    });
+                });
+                
+                // Update joker source visibility immediately if jokers are selected
+                if (currentJokerValue > 0) {
+                    jokerSourceDiv.style.display = 'block';
+                    
+                    const is7Jokers = currentJokerValue === 7;
+                    const individualOption = document.getElementById('jokerIndividualOption');
+                    const libraryIndividualOption = document.getElementById('jokerLibraryIndividualOption');
+                    
+                    if (individualOption) {
+                        individualOption.style.display = is7Jokers ? 'block' : 'none';
+                    }
+                    if (libraryIndividualOption) {
+                        libraryIndividualOption.style.display = is7Jokers ? 'block' : 'none';
+                    }
+                } else {
+                    jokerSourceDiv.style.display = 'none';
+                }
+            };
+            
+            // Add listeners to suit radios
+            document.querySelectorAll('input[name="suits"]').forEach(radio => {
+                radio.addEventListener('change', updateJokerOptions);
+            });
+            
+            // Call once on page load to set initial state
+            updateJokerOptions();
+        });
+
+        // ========================================
+        // GAME CRAFTER INTEGRATION FUNCTIONS
+        // ========================================
+
+        let gcAPI = null;
+        let gcGameId = null;
+        let gcDeckId = null;
+        let gcFolderId = null;
+
+        /**
+         * Resize a canvas from MPC specs (2448×3330) to Game Crafter specs (825×1125)
+         * Returns a promise that resolves with the resized blob
+         */
+        async function resizeCanvasToGameCrafter(sourceCanvas) {
+            return new Promise(resolve => {
+                const targetWidth = 825;
+                const targetHeight = 1125;
+                
+                // Create a new canvas for the resized image
+                const resizedCanvas = document.createElement('canvas');
+                resizedCanvas.width = targetWidth;
+                resizedCanvas.height = targetHeight;
+                const ctx = resizedCanvas.getContext('2d');
+                
+                // Use high-quality image smoothing
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                
+                // Draw the source canvas scaled down to target size
+                ctx.drawImage(sourceCanvas, 0, 0, targetWidth, targetHeight);
+                
+                // Convert to blob
+                resizedCanvas.toBlob(resolve, 'image/png');
+            });
+        }
+
+        async function createCardBack() {
+            return new Promise(resolve => {
+                const canvas = document.createElement('canvas');
+                
+                // MPC specs
+                const w = 825;
+                const h = 1125;
+                const borderSize = 20;
+                const borderInset = 40;
+                
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                
+                // If custom card back is uploaded, use it
+                if (cardBackImage) {
+                    const img = new Image();
+                    img.onload = () => {
+                        // Fill with white background first
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, w, h);
+                        
+                        // Calculate scaled dimensions
+                        const scaledWidth = img.width * cardBackScale;
+                        const scaledHeight = img.height * cardBackScale;
+                        
+                        // Center the image
+                        const x = (w - scaledWidth) / 2;
+                        const y = (h - scaledHeight) / 2;
+                        
+                        // Draw the scaled card back
+                        ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
+                        
+                        canvas.toBlob(resolve, 'image/png');
+                    };
+                    img.src = cardBackImage;
+                } else {
+                    // Default blue gradient
+                    const gradient = ctx.createLinearGradient(0, 0, 0, h);
+                    gradient.addColorStop(0, '#1e3a8a');
+                    gradient.addColorStop(1, '#3b82f6');
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, w, h);
+                    
+                    ctx.strokeStyle = 'white';
+                    ctx.lineWidth = borderSize;
+                    ctx.strokeRect(borderInset, borderInset, w - borderInset*2, h - borderInset*2);
+                    
+                    canvas.toBlob(resolve, 'image/png');
+                }
+            });
+        }
+
+
+        function showGCStatus(message, type) {
+            const colors = {
+                error: 'bg-red-100 border-l-4 border-red-400 text-red-700',
+                info: 'bg-blue-100 border-l-4 border-blue-400 text-blue-700',
+                success: 'bg-green-100 border-l-4 border-green-400 text-green-700'
+            };
+            
+            document.getElementById('gcStatus').innerHTML = `
+                <div class="${colors[type]} p-4 rounded">
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+
+
+        // ============================================================================
+        // GAME CRAFTER INTEGRATION - Personal Testing Version
+        // ============================================================================
+
+        let gameCrafterAPI = null;
+
+        async function uploadToGameCrafterDirect() {
+            // Get credentials from input fields
+            const USERNAME = document.getElementById('gcUsername')?.value.trim();
+            const PASSWORD = document.getElementById('gcPassword')?.value.trim();
+            const PRIVATE_KEY = document.getElementById('gcPublicKey')?.value.trim();  // This is the PUBLIC KEY (api_key_id)
+            
+            // Validate credentials
+            if (!USERNAME || !PASSWORD || !PRIVATE_KEY) {
+                alert('⚠️ Game Crafter Credentials Required\n\nPlease enter your Game Crafter credentials in the configuration section above:\n\n• Username (email)\n• Password\n• Public API Key\n\nFind your API key at:\nhttps://www.thegamecrafter.com/account/apikeys');
+                
+                // Scroll to credentials section and open it
+                const detailsElement = document.querySelector('details');
+                if (detailsElement) {
+                    detailsElement.open = true;
+                    detailsElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
+            
+            const deckName = prompt('Enter deck name:', 'My Custom Deck');
+            if (!deckName) return;
+
+            const progressSection = document.getElementById('uploadProgress');
+            const progressBar = document.getElementById('uploadProgressBar');
+            const progressText = document.getElementById('uploadProgressText');
+            const progressDetails = document.getElementById('uploadProgressDetails');
+            
+            progressSection.style.display = 'block';
+            progressSection.scrollIntoView({ behavior: 'smooth' });
+            progressDetails.innerHTML = '';
+            
+            try {
+                // Step 1: Login
+                updateProgress(5, 'Logging in to Game Crafter...', progressBar, progressText);
+                addDetail('Authenticating...', progressDetails);
+                
+                gameCrafterAPI = new GameCrafterAPI(PRIVATE_KEY);
+                await gameCrafterAPI.login(USERNAME, PASSWORD);
+                
+                // Step 2: Create folder
+                updateProgress(10, 'Creating folder...', progressBar, progressText);
+                addDetail('Creating folder for organization', progressDetails);
+                const folder = await gameCrafterAPI.createFolder(`${deckName} - ${new Date().toISOString().split('T')[0]}`);
+                
+                // Step 3: Create game
+                updateProgress(15, 'Creating game...', progressBar, progressText);
+                addDetail(`Creating game: ${deckName}`, progressDetails);
+                const game = await gameCrafterAPI.createGame(deckName, 'Custom playing cards deck', '');
+                
+                // Step 4: Generate and upload card back
+                updateProgress(20, 'Creating card back...', progressBar, progressText);
+                addDetail('Generating card back image', progressDetails);
+                
+                const backBlob = await createCardBack();
+                const backFile = new File([backBlob], 'card_back.png', { type: 'image/png' });
+                const backImage = await gameCrafterAPI.uploadFile(backFile, folder.id);
+                
+                // Step 5: Create deck
+                updateProgress(25, 'Creating deck...', progressBar, progressText);
+                addDetail(`Creating deck with ${(suits.length * ranks.length) + config.jokerCount} cards`, progressDetails);
+                const deck = await gameCrafterAPI.createDeck(game.id, deckName, 'PokerDeck', backImage.id);
+                
+                // Step 6: Generate and upload all cards
+                const totalCards = await generateAndUploadAllCards(deck, folder, progressBar, progressText, progressDetails);
+                
+                // Complete
+                updateProgress(100, 'Upload complete!', progressBar, progressText);
+                showUploadComplete(game, totalCards);
+                
+            } catch (error) {
+                addDetail(`❌ Error: ${error.message}`, progressDetails);
+                progressText.textContent = 'Upload failed!';
+                progressText.className = 'text-sm text-red-700 mb-2 font-bold';
+                console.error('Upload error:', error);
+            }
+        }
+
+        async function generateAndUploadAllCards(deck, folder, progressBar, progressText, progressDetails) {
+            const canvas = document.getElementById('hiddenCanvas');
+            let cardCount = 0;
+            const totalCards = (suits.length * ranks.length) + config.jokerCount;
+            let currentCard = 0;
+            
+            // Upload regular cards
+            for (let si = 0; si < suits.length; si++) {
+                for (let ri = 0; ri < ranks.length; ri++) {
+                    currentCard++;
+                    const progress = 25 + (70 * (currentCard / totalCards));
+                    
+                    const rank = ranks[ri];
+                    const suit = suits[si];
+                    
+                    updateProgress(progress, `Uploading ${currentCard} of ${totalCards}...`, progressBar, progressText);
+                    addDetail(`Creating: ${rank} of ${suit.name}`, progressDetails);
+                    
+                    // Generate card image at MPC size, then resize for Game Crafter
+                    const blob = await new Promise(resolve => {
+                        drawCard(canvas, rank, suit, si, async () => {
+                            const resizedBlob = await resizeCanvasToGameCrafter(canvas);
+                            resolve(resizedBlob);
+                        });
+                    });
+                    
+                    // Upload and create card
+                    const file = new File([blob], `${rank}_${suit.name}.png`, { type: 'image/png' });
+                    const faceImage = await gameCrafterAPI.uploadFile(file, folder.id);
+                    await gameCrafterAPI.createCard(deck.id, `${rank} of ${suit.name}`, faceImage.id);
+                    
+                    cardCount++;
+                    
+                    // Rate limiting: pause every 4 cards
+                    if (cardCount % 4 === 0) {
+                        await new Promise(r => setTimeout(r, 1000));
+                    }
+                }
+            }
+            
+            // Upload jokers
+            const hasJokerImages = jokerImage || selectedJokerKey || 
+                (config.jokerSource === 'individual' && (individualJokerImages.WILD || individualJokerImages.SKIP || individualJokerImages.JOKER)) ||
+                (config.jokerSource === 'library-individual' && (selectedLibraryJokers.WILD || selectedLibraryJokers.SKIP || selectedLibraryJokers.JOKER));
+            
+            if (config.jokerCount > 0 && hasJokerImages) {
+                if (config.jokerCount === 2) {
+                    for (let i = 1; i <= 2; i++) {
+                        currentCard++;
+                        const progress = 25 + (70 * (currentCard / totalCards));
+                        
+                        updateProgress(progress, `Uploading Joker ${i}...`, progressBar, progressText);
+                        addDetail(`Creating: Joker ${i}`, progressDetails);
+                        
+                        const blob = await new Promise(resolve => {
+                            drawJoker(canvas, 'JOKER', async () => {
+                                const resizedBlob = await resizeCanvasToGameCrafter(canvas);
+                                resolve(resizedBlob);
+                            });
+                        });
+                        
+                        const file = new File([blob], `Joker_${i}.png`, { type: 'image/png' });
+                        const faceImage = await gameCrafterAPI.uploadFile(file, folder.id);
+                        await gameCrafterAPI.createCard(deck.id, `Joker ${i}`, faceImage.id);
+                        
+                        cardCount++;
+                    }
+                } else if (config.jokerCount === 7) {
+                    const jokerTypes = [
+                        { type: 'WILD', count: 4 },
+                        { type: 'SKIP', count: 2 },
+                        { type: 'JOKER', count: 1 }
+                    ];
+                    
+                    for (const {type, count} of jokerTypes) {
+                        for (let i = 1; i <= count; i++) {
+                            currentCard++;
+                            const progress = 25 + (70 * (currentCard / totalCards));
+                            
+                            updateProgress(progress, `Uploading ${type} ${i}...`, progressBar, progressText);
+                            addDetail(`Creating: ${type} ${i}`, progressDetails);
+                            
+                            const blob = await new Promise(resolve => {
+                                drawJoker(canvas, type, async () => {
+                                    const resizedBlob = await resizeCanvasToGameCrafter(canvas);
+                                    resolve(resizedBlob);
+                                });
+                            });
+                            
+                            const file = new File([blob], `${type}_${i}.png`, { type: 'image/png' });
+                            const faceImage = await gameCrafterAPI.uploadFile(file, folder.id);
+                            await gameCrafterAPI.createCard(deck.id, `${type} ${i}`, faceImage.id);
+                            
+                            cardCount++;
+                        }
+                    }
+                }
+            }
+            
+            return cardCount;
+        }
+
+        async function createCardBack() {
+            return new Promise(resolve => {
+                const canvas = document.createElement('canvas');
+                const w = 825;
+                const h = 1125;
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                
+                // If custom card back is uploaded, use it
+                if (cardBackImage) {
+                    const img = new Image();
+                    img.onload = () => {
+                        // Fill with white background first
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, w, h);
+                        
+                        // Calculate scaled dimensions based on resize slider
+                        const scaledWidth = img.width * cardBackScale;
+                        const scaledHeight = img.height * cardBackScale;
+                        
+                        // Center the image
+                        const x = (w - scaledWidth) / 2;
+                        const y = (h - scaledHeight) / 2;
+                        
+                        // Draw the scaled card back
+                        ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
+                        
+                        canvas.toBlob(b => resolve(b), 'image/png');
+                        console.log(`✅ Card back created with custom image (scale: ${(cardBackScale * 100).toFixed(0)}%)`);
+                    };
+                    img.src = cardBackImage;
+                } else {
+                    // Default blue gradient background
+                    const gradient = ctx.createLinearGradient(0, 0, 0, h);
+                    gradient.addColorStop(0, '#1e3a8a');
+                    gradient.addColorStop(1, '#3b82f6');
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, w, h);
+                    
+                    // White border
+                    ctx.strokeStyle = 'white';
+                    ctx.lineWidth = 20;
+                    ctx.strokeRect(40, 40, w - 80, h - 80);
+                    
+                    canvas.toBlob(b => resolve(b), 'image/png');
+                    console.log('✅ Card back created with default blue gradient');
+                }
+            });
+        }
+
+        function updateProgress(percent, text, barElement, textElement) {
+            barElement.style.width = percent + '%';
+            textElement.textContent = text;
+        }
+
+        function addDetail(text, detailsElement) {
+            const entry = document.createElement('div');
+            entry.textContent = '✓ ' + text;
+            entry.className = 'text-green-600';
+            detailsElement.appendChild(entry);
+            detailsElement.scrollTop = detailsElement.scrollHeight;
+        }
+
+        function showUploadComplete(game, cardCount) {
+            const completeSection = document.getElementById('uploadComplete');
+            const contentDiv = document.getElementById('uploadCompleteContent');
+            
+            completeSection.style.display = 'block';
+            completeSection.scrollIntoView({ behavior: 'smooth' });
+            
+            contentDiv.innerHTML = `
+                <div class="space-y-4">
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                        <p class="font-bold text-green-800 text-xl mb-2">Successfully uploaded ${cardCount} cards!</p>
+                        <p class="text-sm text-green-700">Game: ${game.name}</p>
+                    </div>
+                    
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                        <p class="font-bold text-blue-800 mb-2">⚙️ Next Steps:</p>
+                        <ol class="text-sm text-blue-700 space-y-1 list-decimal list-inside">
+                            <li>Go to Game Crafter and edit your game</li>
+                            <li>Enable <strong>Linen Finish</strong> (Edit Details → Surfacing → $0.25 per sheet)</li>
+                            <li>Optional: Enable <strong>UV Coating</strong> for durability</li>
+                            <li>Order your deck!</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <a href="https://www.thegamecrafter.com/publish/products" 
+                           target="_blank"
+                           class="block bg-purple-600 text-white text-center py-3 px-6 rounded-lg hover:bg-purple-700 transition">
+                            📋 View on Game Crafter →
+                        </a>
+                        <button onclick="location.reload()" 
+                           class="block bg-gray-600 text-white text-center py-3 px-6 rounded-lg hover:bg-gray-700 transition">
+                            🔄 Create Another Deck
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============================================================================
+        // END GAME CRAFTER INTEGRATION
+        // ============================================================================
+
+    </script>
+</body>
+</html>
